@@ -22,9 +22,9 @@ st.markdown(
     """
     <style>
     :root { color-scheme: light; }
-    .stApp { background: #f7f6f3; color: #202522; font-family: Aptos, system-ui, sans-serif; }
-    [data-testid="stAppViewContainer"] { background: #f7f6f3; }
-    [data-testid="stHeader"] { background: rgba(247, 246, 243, 0.94); }
+    .stApp { background: #f7f6f3; color: #202522; font-family: Aptos, system-ui, sans-serif; border: 0 !important; }
+    [data-testid="stAppViewContainer"] { background: #f7f6f3; border: 0 !important; }
+    [data-testid="stHeader"] { background: rgba(247, 246, 243, 0.94); border: 0 !important; }
     [data-testid="stSidebar"] { background: #efeee9; border-right: 1px solid #dfddd7; }
     [data-testid="stSidebarContent"] { padding: 1.4rem 1.1rem; }
     .block-container { max-width: 1220px; padding: 2.5rem 2.2rem 4.5rem; }
@@ -36,8 +36,8 @@ st.markdown(
     .workflow-label { color: #8a4d32; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 0.55rem; }
     .subtitle { max-width: 680px; color: #59615d; font-size: 1rem; line-height: 1.6; margin: 0 0 1.65rem; }
     .section-copy { color: #69716c; font-size: 0.9rem; line-height: 1.5; max-width: 65ch; }
-    [data-testid="stVerticalBlockBorderWrapper"] { background: #fff; border-color: #dfddd7; border-radius: 10px; }
-    [data-testid="stMetric"] { background: #fff; border: 1px solid #dfddd7; border-radius: 8px; padding: 0.85rem 1rem; min-height: 92px; }
+    [data-testid="stVerticalBlockBorderWrapper"] { background: transparent; border: 0 !important; box-shadow: none !important; border-radius: 0; }
+    [data-testid="stMetric"] { background: #fff; border: 0 !important; border-radius: 0; box-shadow: inset 0 -1px 0 #dfddd7; padding: 0.85rem 1rem; min-height: 92px; }
     [data-testid="stMetricLabel"] { color: #69716c; }
     [data-testid="stMetricValue"] { color: #202522; font-variant-numeric: tabular-nums; }
     [data-testid="stFileUploader"] { background: #faf9f7; border: 1px dashed #b9b6ae; border-radius: 8px; padding: 0.3rem; }
@@ -47,12 +47,25 @@ st.markdown(
     }
     [data-testid="stBaseButton-primary"] { background: #202522; border-color: #202522; color: #fff; }
     [data-testid="stBaseButton-primary"]:hover { background: #343b37; border-color: #343b37; transform: translateY(-1px); }
-    [data-testid="stBaseButton-secondary"] { background: #fff; border-color: #a9aaa4; color: #202522; }
+    [data-testid="stBaseButton-primary"]:disabled,
+    [data-testid="stBaseButton-secondary"]:disabled {
+        background: #e6e4de; border-color: #d0cdc4; color: #6f746f; opacity: 1; cursor: not-allowed;
+    }
+    [data-testid="stBaseButton-secondary"] { background: #fff; border-color: #c4c1b9; color: #202522; }
     [data-testid="stBaseButton-secondary"]:hover { background: #f0efeb; border-color: #202522; transform: translateY(-1px); }
     button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex="0"]:focus-visible {
         outline: 2px solid #8a4d32 !important; outline-offset: 2px !important;
     }
-    [data-baseweb="select"] > div, [data-baseweb="input"] > div, textarea { border-radius: 6px !important; }
+    [data-baseweb="select"] > div {
+        background: #fff !important; border: 1px solid #c4c1b9 !important; border-radius: 6px !important;
+        color: #202522 !important; box-shadow: none !important;
+    }
+    [data-baseweb="select"] input, [data-baseweb="select"] [data-testid="stMarkdownContainer"],
+    [data-baseweb="select"] span { color: #202522 !important; }
+    [data-baseweb="input"] > div, textarea {
+        background: #fff !important; border: 1px solid #c4c1b9 !important; border-radius: 6px !important;
+        box-shadow: none !important;
+    }
     .status-panel { border-radius: 8px; padding: 1.05rem 1.15rem; margin: 0.1rem 0 1.1rem; border: 1px solid; }
     .status-panel h2 { margin: 0.2rem 0 0.35rem; font-size: 1.45rem !important; }
     .status-panel p { margin: 0; line-height: 1.5; }
@@ -205,7 +218,7 @@ summary[1].metric("Needs review", sum(item.status == DecisionStatus.MANUAL_REVIE
 summary[2].metric("Latest result", history[0].status.value.replace("_", " ") if history else "No activity")
 
 st.markdown("<div style='height: 1rem'></div>", unsafe_allow_html=True)
-with st.container(border=True):
+with st.container():
     st.subheader("Process an invoice")
     st.markdown('<p class="section-copy">Choose one action. Demo data is reproducible; uploaded files use the same decision engine.</p>', unsafe_allow_html=True)
     demo_column, upload_column = st.columns(2, gap="large")
@@ -253,7 +266,7 @@ with st.expander("Use structured JSON instead"):
             st.error(f"Could not process JSON: {exc}")
 
 st.markdown("<div style='height: 1rem'></div>", unsafe_allow_html=True)
-with st.container(border=True):
+with st.container():
     st.subheader("Decision explanation")
     decision = st.session_state.get("last_decision")
     if decision:
