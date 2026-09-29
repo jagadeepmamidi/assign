@@ -1,0 +1,6 @@
+[tool.pyright]
+include = ["src", "evals"]
+extraPaths = ["."]
+
+[tool.ruff]
+line-length = 120

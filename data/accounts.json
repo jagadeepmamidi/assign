@@ -1,0 +1,1750 @@
+[
+  {
+    "account_id": "ACC-3336",
+    "company": "Omni Consumer Products",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Business",
+    "arr_usd": 500000,
+    "seats_licensed": 1845,
+    "seats_active": 1693,
+    "products": [
+      "WorkflowEngine",
+      "AnalyticsHub"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Inactive",
+    "open_tickets": 7,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-07-28",
+    "renewal_date": "2026-08-19",
+    "last_qbr_date": "2025-12-28",
+    "primary_contact": {
+      "name": "Quinn Wilson",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [
+      "3 consecutive P1 tickets in the last 30 days",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 5,
+    "integrations_active": [
+      "HubSpot"
+    ],
+    "region": "EU-West",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-3033",
+    "company": "Polaris Group",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 120000,
+    "seats_licensed": 1049,
+    "seats_active": 925,
+    "products": [
+      "DataBridge Pro"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Increasing",
+    "open_tickets": 11,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-07-08",
+    "renewal_date": "2026-06-30",
+    "last_qbr_date": "2025-12-15",
+    "primary_contact": {
+      "name": "Taylor Smith",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 57,
+    "integrations_active": [
+      "Google Workspace",
+      "Jira"
+    ],
+    "region": "APAC",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-7893",
+    "company": "Solaris Data",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Enterprise",
+    "arr_usd": 24000,
+    "seats_licensed": 1314,
+    "seats_active": 757,
+    "products": [
+      "AnalyticsHub",
+      "SecureVault",
+      "DataBridge Pro",
+      "CloudSync"
+    ],
+    "health_status": "New",
+    "usage_trend": "Increasing",
+    "open_tickets": 5,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-12-24",
+    "renewal_date": "2026-12-25",
+    "last_qbr_date": "2026-04-05",
+    "primary_contact": {
+      "name": "Quinn Wilson",
+      "title": "IT Manager"
+    },
+    "escalation_notes": [],
+    "nps_score": 10,
+    "last_login_days_ago": 24,
+    "integrations_active": [
+      "HubSpot"
+    ],
+    "region": "US-East",
+    "industry": "Retail"
+  },
+  {
+    "account_id": "ACC-4654",
+    "company": "Initech",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 96000,
+    "seats_licensed": 1152,
+    "seats_active": 988,
+    "products": [
+      "CloudSync",
+      "SecureVault",
+      "WorkflowEngine"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Inactive",
+    "open_tickets": 1,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-10-21",
+    "renewal_date": "2027-01-15",
+    "last_qbr_date": "2025-11-30",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Engineering Manager"
+    },
+    "escalation_notes": [],
+    "nps_score": 3,
+    "last_login_days_ago": 27,
+    "integrations_active": [
+      "AWS S3",
+      "HubSpot"
+    ],
+    "region": "US-Central",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-4610",
+    "company": "Zymurgy Systems",
+    "tam": "Olivia Grant",
+    "plan_tier": "Business",
+    "arr_usd": 48000,
+    "seats_licensed": 1705,
+    "seats_active": 1686,
+    "products": [
+      "WorkflowEngine",
+      "AnalyticsHub",
+      "SecureVault"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Increasing",
+    "open_tickets": 10,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-09-14",
+    "renewal_date": "2027-04-04",
+    "last_qbr_date": "2026-01-28",
+    "primary_contact": {
+      "name": "Avery Martinez",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 3,
+    "integrations_active": [
+      "Jira",
+      "Okta",
+      "Google Workspace",
+      "BigQuery"
+    ],
+    "region": "US-Central",
+    "industry": "Retail"
+  },
+  {
+    "account_id": "ACC-8113",
+    "company": "Vertex Solutions",
+    "tam": "Olivia Grant",
+    "plan_tier": "Professional",
+    "arr_usd": 500000,
+    "seats_licensed": 40,
+    "seats_active": 29,
+    "products": [
+      "DataBridge Pro",
+      "SecureVault",
+      "AnalyticsHub"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Declining",
+    "open_tickets": 1,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-04-30",
+    "renewal_date": "2027-05-09",
+    "last_qbr_date": "2026-01-23",
+    "primary_contact": {
+      "name": "Jamie Lee",
+      "title": "IT Manager"
+    },
+    "escalation_notes": [
+      "Procurement team requested pricing review",
+      "Negative sentiment detected in recent support tickets",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 51,
+    "integrations_active": [
+      "Jira",
+      "HubSpot",
+      "Google Workspace",
+      "Snowflake"
+    ],
+    "region": "US-Central",
+    "industry": "Technology"
+  },
+  {
+    "account_id": "ACC-1664",
+    "company": "Oscorp Solutions",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Enterprise",
+    "arr_usd": 96000,
+    "seats_licensed": 1239,
+    "seats_active": 1115,
+    "products": [
+      "CloudSync"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Increasing",
+    "open_tickets": 0,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-01-18",
+    "renewal_date": "2026-06-24",
+    "last_qbr_date": "2026-04-26",
+    "primary_contact": {
+      "name": "Riley Johnson",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 10,
+    "integrations_active": [
+      "Google Workspace"
+    ],
+    "region": "EU-West",
+    "industry": "Financial Services"
+  },
+  {
+    "account_id": "ACC-1785",
+    "company": "Cyberdyne Systems",
+    "tam": "Fatima Al-Rashid",
+    "plan_tier": "Starter",
+    "arr_usd": 12000,
+    "seats_licensed": 610,
+    "seats_active": 563,
+    "products": [
+      "SecureVault"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Stable",
+    "open_tickets": 0,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2024-11-28",
+    "renewal_date": "2027-05-18",
+    "last_qbr_date": "2026-02-19",
+    "primary_contact": {
+      "name": "Morgan Davis",
+      "title": "Platform Lead"
+    },
+    "escalation_notes": [
+      "Procurement team requested pricing review",
+      "Negative sentiment detected in recent support tickets"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 47,
+    "integrations_active": [
+      "Zendesk"
+    ],
+    "region": "EU-West",
+    "industry": "Technology"
+  },
+  {
+    "account_id": "ACC-1275",
+    "company": "Tyrell Corp",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Enterprise",
+    "arr_usd": 240000,
+    "seats_licensed": 1572,
+    "seats_active": 953,
+    "products": [
+      "SecureVault",
+      "WorkflowEngine",
+      "AnalyticsHub",
+      "CloudSync"
+    ],
+    "health_status": "New",
+    "usage_trend": "Increasing",
+    "open_tickets": 9,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-04-17",
+    "renewal_date": "2027-02-05",
+    "last_qbr_date": "2026-04-09",
+    "primary_contact": {
+      "name": "Quinn Wilson",
+      "title": "Director of IT"
+    },
+    "escalation_notes": [],
+    "nps_score": 8,
+    "last_login_days_ago": 80,
+    "integrations_active": [
+      "Okta",
+      "Salesforce",
+      "Jira"
+    ],
+    "region": "US-Central",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-2094",
+    "company": "Orion Systems",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Professional",
+    "arr_usd": 12000,
+    "seats_licensed": 425,
+    "seats_active": 352,
+    "products": [
+      "DataBridge Pro",
+      "SecureVault",
+      "AnalyticsHub"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 5,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-06-30",
+    "renewal_date": "2026-07-25",
+    "last_qbr_date": "2026-04-09",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "CTO"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 13,
+    "integrations_active": [
+      "AWS S3",
+      "Slack",
+      "Azure AD"
+    ],
+    "region": "US-East",
+    "industry": "Manufacturing"
+  },
+  {
+    "account_id": "ACC-3691",
+    "company": "Globex Industries",
+    "tam": "Olivia Grant",
+    "plan_tier": "Professional",
+    "arr_usd": 500000,
+    "seats_licensed": 1546,
+    "seats_active": 741,
+    "products": [
+      "DataBridge Pro"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 10,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-09-12",
+    "renewal_date": "2027-01-01",
+    "last_qbr_date": "2026-01-01",
+    "primary_contact": {
+      "name": "Morgan Davis",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 48,
+    "integrations_active": [],
+    "region": "US-West",
+    "industry": "Manufacturing"
+  },
+  {
+    "account_id": "ACC-8331",
+    "company": "Altair Industries",
+    "tam": "Olivia Grant",
+    "plan_tier": "Professional",
+    "arr_usd": 12000,
+    "seats_licensed": 1780,
+    "seats_active": 1006,
+    "products": [
+      "WorkflowEngine"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Inactive",
+    "open_tickets": 6,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2025-07-23",
+    "renewal_date": "2027-04-20",
+    "last_qbr_date": "2026-04-06",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "CTO"
+    },
+    "escalation_notes": [
+      "Customer expressed frustration with response times in last sync",
+      "Negative sentiment detected in recent support tickets",
+      "IT team flagged integration reliability concerns"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 87,
+    "integrations_active": [
+      "Slack",
+      "Okta"
+    ],
+    "region": "APAC",
+    "industry": "Logistics"
+  },
+  {
+    "account_id": "ACC-2774",
+    "company": "Dunder Mifflin Tech",
+    "tam": "Olivia Grant",
+    "plan_tier": "Starter",
+    "arr_usd": 12000,
+    "seats_licensed": 1717,
+    "seats_active": 792,
+    "products": [
+      "SecureVault",
+      "WorkflowEngine"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Stable",
+    "open_tickets": 9,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-07-07",
+    "renewal_date": "2026-09-24",
+    "last_qbr_date": "2026-01-07",
+    "primary_contact": {
+      "name": "Jordan Park",
+      "title": "IT Manager"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 21,
+    "integrations_active": [
+      "AWS S3",
+      "BigQuery",
+      "Azure AD",
+      "Google Workspace"
+    ],
+    "region": "US-West",
+    "industry": "Education"
+  },
+  {
+    "account_id": "ACC-4795",
+    "company": "Umbrella Technologies",
+    "tam": "Olivia Grant",
+    "plan_tier": "Business",
+    "arr_usd": 96000,
+    "seats_licensed": 478,
+    "seats_active": 321,
+    "products": [
+      "DataBridge Pro",
+      "CloudSync"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Increasing",
+    "open_tickets": 7,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2024-11-11",
+    "renewal_date": "2027-01-16",
+    "last_qbr_date": "2026-05-07",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Platform Lead"
+    },
+    "escalation_notes": [
+      "Negative sentiment detected in recent support tickets",
+      "Champion left the company \u2014 no replacement identified yet",
+      "Customer skipped last two scheduled QBRs"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 51,
+    "integrations_active": [
+      "Jira",
+      "Salesforce",
+      "BigQuery",
+      "Zendesk"
+    ],
+    "region": "APAC",
+    "industry": "Logistics"
+  },
+  {
+    "account_id": "ACC-3353",
+    "company": "Horizon Tech",
+    "tam": "Fatima Al-Rashid",
+    "plan_tier": "Professional",
+    "arr_usd": 240000,
+    "seats_licensed": 186,
+    "seats_active": 161,
+    "products": [
+      "CloudSync"
+    ],
+    "health_status": "New",
+    "usage_trend": "Increasing",
+    "open_tickets": 5,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-11-19",
+    "renewal_date": "2026-12-16",
+    "last_qbr_date": "2025-11-25",
+    "primary_contact": {
+      "name": "Quinn Wilson",
+      "title": "Engineering Manager"
+    },
+    "escalation_notes": [],
+    "nps_score": 2,
+    "last_login_days_ago": 33,
+    "integrations_active": [
+      "Google Workspace",
+      "Jira",
+      "Slack"
+    ],
+    "region": "US-Central",
+    "industry": "Retail"
+  },
+  {
+    "account_id": "ACC-2191",
+    "company": "Vandelay Industries",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Business",
+    "arr_usd": 120000,
+    "seats_licensed": 491,
+    "seats_active": 477,
+    "products": [
+      "AnalyticsHub",
+      "SecureVault"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Increasing",
+    "open_tickets": 4,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-02-08",
+    "renewal_date": "2027-04-02",
+    "last_qbr_date": "2025-12-25",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "VP Engineering"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 77,
+    "integrations_active": [
+      "Zendesk"
+    ],
+    "region": "US-Central",
+    "industry": "Education"
+  },
+  {
+    "account_id": "ACC-5108",
+    "company": "Endframe Analytics",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 48000,
+    "seats_licensed": 1335,
+    "seats_active": 1304,
+    "products": [
+      "CloudSync",
+      "AnalyticsHub",
+      "SecureVault"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Inactive",
+    "open_tickets": 10,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-06-10",
+    "renewal_date": "2027-03-10",
+    "last_qbr_date": "2026-01-17",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Engineering Manager"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 22,
+    "integrations_active": [
+      "AWS S3"
+    ],
+    "region": "APAC",
+    "industry": "Government"
+  },
+  {
+    "account_id": "ACC-7397",
+    "company": "Gavin Belson Co",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 96000,
+    "seats_licensed": 1483,
+    "seats_active": 1355,
+    "products": [
+      "CloudSync",
+      "WorkflowEngine",
+      "DataBridge Pro",
+      "SecureVault"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Stable",
+    "open_tickets": 9,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-08-14",
+    "renewal_date": "2026-07-30",
+    "last_qbr_date": "2026-01-06",
+    "primary_contact": {
+      "name": "Avery Martinez",
+      "title": "Platform Lead"
+    },
+    "escalation_notes": [
+      "Negative sentiment detected in recent support tickets",
+      "3 consecutive P1 tickets in the last 30 days"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 19,
+    "integrations_active": [
+      "BigQuery"
+    ],
+    "region": "US-Central",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-4213",
+    "company": "Soylent Corp",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Business",
+    "arr_usd": 12000,
+    "seats_licensed": 116,
+    "seats_active": 86,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub",
+      "SecureVault",
+      "WorkflowEngine"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Inactive",
+    "open_tickets": 5,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2025-04-08",
+    "renewal_date": "2027-05-07",
+    "last_qbr_date": "2025-11-24",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Director of IT"
+    },
+    "escalation_notes": [
+      "Customer skipped last two scheduled QBRs",
+      "IT team flagged integration reliability concerns"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 69,
+    "integrations_active": [
+      "PagerDuty"
+    ],
+    "region": "EU-West",
+    "industry": "Media"
+  },
+  {
+    "account_id": "ACC-5396",
+    "company": "Cybertronics Ltd",
+    "tam": "Fatima Al-Rashid",
+    "plan_tier": "Business",
+    "arr_usd": 240000,
+    "seats_licensed": 390,
+    "seats_active": 358,
+    "products": [
+      "CloudSync",
+      "SecureVault",
+      "WorkflowEngine"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Stable",
+    "open_tickets": 10,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2024-09-22",
+    "renewal_date": "2026-08-31",
+    "last_qbr_date": "2026-04-08",
+    "primary_contact": {
+      "name": "Jordan Park",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [
+      "3 consecutive P1 tickets in the last 30 days",
+      "Negative sentiment detected in recent support tickets",
+      "Champion left the company \u2014 no replacement identified yet"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 43,
+    "integrations_active": [
+      "Jira",
+      "Snowflake",
+      "Slack"
+    ],
+    "region": "EU-West",
+    "industry": "Retail"
+  },
+  {
+    "account_id": "ACC-9733",
+    "company": "Pied Piper Inc",
+    "tam": "Lucas Ferreira",
+    "plan_tier": "Professional",
+    "arr_usd": 48000,
+    "seats_licensed": 1788,
+    "seats_active": 1315,
+    "products": [
+      "SecureVault",
+      "CloudSync",
+      "WorkflowEngine"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Increasing",
+    "open_tickets": 9,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-04-19",
+    "renewal_date": "2026-09-16",
+    "last_qbr_date": "2025-12-28",
+    "primary_contact": {
+      "name": "Riley Johnson",
+      "title": "Chief Data Officer"
+    },
+    "escalation_notes": [
+      "Decision maker considering competing vendor evaluation",
+      "IT team flagged integration reliability concerns"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 82,
+    "integrations_active": [
+      "AWS S3",
+      "Snowflake",
+      "Okta"
+    ],
+    "region": "US-Central",
+    "industry": "Media"
+  },
+  {
+    "account_id": "ACC-1256",
+    "company": "Apex Dynamics",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 120000,
+    "seats_licensed": 1807,
+    "seats_active": 938,
+    "products": [
+      "SecureVault",
+      "AnalyticsHub",
+      "CloudSync"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Increasing",
+    "open_tickets": 1,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-10-05",
+    "renewal_date": "2026-11-24",
+    "last_qbr_date": "2025-12-16",
+    "primary_contact": {
+      "name": "Casey Brown",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [
+      "IT team flagged integration reliability concerns",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 4,
+    "integrations_active": [],
+    "region": "EU-West",
+    "industry": "Manufacturing"
+  },
+  {
+    "account_id": "ACC-7463",
+    "company": "Rekall Industries",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Starter",
+    "arr_usd": 48000,
+    "seats_licensed": 453,
+    "seats_active": 302,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub",
+      "CloudSync"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Inactive",
+    "open_tickets": 3,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2025-02-12",
+    "renewal_date": "2026-12-05",
+    "last_qbr_date": "2025-12-05",
+    "primary_contact": {
+      "name": "Casey Brown",
+      "title": "VP Engineering"
+    },
+    "escalation_notes": [
+      "Decision maker considering competing vendor evaluation",
+      "IT team flagged integration reliability concerns"
+    ],
+    "nps_score": 1,
+    "last_login_days_ago": 34,
+    "integrations_active": [
+      "PagerDuty"
+    ],
+    "region": "US-East",
+    "industry": "Technology"
+  },
+  {
+    "account_id": "ACC-2427",
+    "company": "Pellucid Analytics",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 96000,
+    "seats_licensed": 1435,
+    "seats_active": 807,
+    "products": [
+      "AnalyticsHub"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Increasing",
+    "open_tickets": 0,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-11-22",
+    "renewal_date": "2027-05-02",
+    "last_qbr_date": "2025-12-20",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "CTO"
+    },
+    "escalation_notes": [
+      "Procurement team requested pricing review",
+      "Negative sentiment detected in recent support tickets",
+      "Champion left the company \u2014 no replacement identified yet"
+    ],
+    "nps_score": 9,
+    "last_login_days_ago": 71,
+    "integrations_active": [
+      "Okta",
+      "Jira"
+    ],
+    "region": "US-West",
+    "industry": "Media"
+  },
+  {
+    "account_id": "ACC-8014",
+    "company": "Acme Corp",
+    "tam": "Fatima Al-Rashid",
+    "plan_tier": "Professional",
+    "arr_usd": 48000,
+    "seats_licensed": 293,
+    "seats_active": 212,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub",
+      "SecureVault",
+      "CloudSync"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 5,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-02-15",
+    "renewal_date": "2026-11-11",
+    "last_qbr_date": "2026-01-02",
+    "primary_contact": {
+      "name": "Casey Brown",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 40,
+    "integrations_active": [
+      "Snowflake",
+      "Jira",
+      "AWS S3",
+      "Zendesk"
+    ],
+    "region": "EU-West",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-2944",
+    "company": "Pinnacle Systems",
+    "tam": "Olivia Grant",
+    "plan_tier": "Starter",
+    "arr_usd": 48000,
+    "seats_licensed": 329,
+    "seats_active": 289,
+    "products": [
+      "SecureVault"
+    ],
+    "health_status": "Churning",
+    "usage_trend": "Declining",
+    "open_tickets": 3,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-06-16",
+    "renewal_date": "2026-06-24",
+    "last_qbr_date": "2025-11-30",
+    "primary_contact": {
+      "name": "Casey Brown",
+      "title": "Director of IT"
+    },
+    "escalation_notes": [
+      "Champion left the company \u2014 no replacement identified yet",
+      "Customer expressed frustration with response times in last sync",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 41,
+    "integrations_active": [
+      "Azure AD",
+      "Salesforce"
+    ],
+    "region": "US-Central",
+    "industry": "Manufacturing"
+  },
+  {
+    "account_id": "ACC-7974",
+    "company": "Stark Innovations",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Enterprise",
+    "arr_usd": 240000,
+    "seats_licensed": 800,
+    "seats_active": 665,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Inactive",
+    "open_tickets": 2,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2025-07-16",
+    "renewal_date": "2027-03-14",
+    "last_qbr_date": "2026-01-07",
+    "primary_contact": {
+      "name": "Taylor Smith",
+      "title": "Platform Lead"
+    },
+    "escalation_notes": [
+      "Champion left the company \u2014 no replacement identified yet",
+      "IT team flagged integration reliability concerns",
+      "Negative sentiment detected in recent support tickets"
+    ],
+    "nps_score": 3,
+    "last_login_days_ago": 0,
+    "integrations_active": [
+      "BigQuery"
+    ],
+    "region": "US-Central",
+    "industry": "Retail"
+  },
+  {
+    "account_id": "ACC-7042",
+    "company": "Hooli Corp",
+    "tam": "Olivia Grant",
+    "plan_tier": "Professional",
+    "arr_usd": 24000,
+    "seats_licensed": 399,
+    "seats_active": 249,
+    "products": [
+      "CloudSync",
+      "DataBridge Pro",
+      "AnalyticsHub"
+    ],
+    "health_status": "Churning",
+    "usage_trend": "Declining",
+    "open_tickets": 9,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-10-11",
+    "renewal_date": "2027-03-26",
+    "last_qbr_date": "2026-03-22",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Director of IT"
+    },
+    "escalation_notes": [
+      "Customer expressed frustration with response times in last sync",
+      "Customer skipped last two scheduled QBRs",
+      "Procurement team requested pricing review"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 53,
+    "integrations_active": [
+      "Azure AD",
+      "Jira"
+    ],
+    "region": "US-West",
+    "industry": "Logistics"
+  },
+  {
+    "account_id": "ACC-8588",
+    "company": "Prestige Worldwide",
+    "tam": "Lucas Ferreira",
+    "plan_tier": "Professional",
+    "arr_usd": 48000,
+    "seats_licensed": 1621,
+    "seats_active": 901,
+    "products": [
+      "DataBridge Pro",
+      "CloudSync",
+      "SecureVault"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 7,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-04-03",
+    "renewal_date": "2026-08-04",
+    "last_qbr_date": "2026-01-10",
+    "primary_contact": {
+      "name": "Casey Brown",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 17,
+    "integrations_active": [
+      "Jira",
+      "Google Workspace",
+      "Salesforce"
+    ],
+    "region": "EU-West",
+    "industry": "Retail"
+  },
+  {
+    "account_id": "ACC-2478",
+    "company": "Vehement Capital",
+    "tam": "Lucas Ferreira",
+    "plan_tier": "Starter",
+    "arr_usd": 12000,
+    "seats_licensed": 1331,
+    "seats_active": 690,
+    "products": [
+      "SecureVault",
+      "CloudSync",
+      "AnalyticsHub",
+      "DataBridge Pro"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Stable",
+    "open_tickets": 10,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-04-16",
+    "renewal_date": "2026-09-22",
+    "last_qbr_date": "2026-01-15",
+    "primary_contact": {
+      "name": "Jordan Park",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 3,
+    "integrations_active": [
+      "Jira",
+      "PagerDuty"
+    ],
+    "region": "US-West",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-4507",
+    "company": "Nakatomi Trading",
+    "tam": "Olivia Grant",
+    "plan_tier": "Business",
+    "arr_usd": 24000,
+    "seats_licensed": 493,
+    "seats_active": 291,
+    "products": [
+      "CloudSync",
+      "DataBridge Pro",
+      "AnalyticsHub",
+      "WorkflowEngine"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Stable",
+    "open_tickets": 2,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2025-06-21",
+    "renewal_date": "2027-04-16",
+    "last_qbr_date": "2026-03-13",
+    "primary_contact": {
+      "name": "Taylor Smith",
+      "title": "IT Manager"
+    },
+    "escalation_notes": [
+      "Customer skipped last two scheduled QBRs",
+      "IT team flagged integration reliability concerns",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 62,
+    "integrations_active": [
+      "PagerDuty",
+      "Azure AD",
+      "HubSpot"
+    ],
+    "region": "US-West",
+    "industry": "Education"
+  },
+  {
+    "account_id": "ACC-5748",
+    "company": "Nexus Data",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 120000,
+    "seats_licensed": 379,
+    "seats_active": 194,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub"
+    ],
+    "health_status": "New",
+    "usage_trend": "Increasing",
+    "open_tickets": 7,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-08-28",
+    "renewal_date": "2027-03-03",
+    "last_qbr_date": "2025-12-14",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "Engineering Manager"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 7,
+    "integrations_active": [
+      "HubSpot",
+      "Zendesk"
+    ],
+    "region": "US-Central",
+    "industry": "Government"
+  },
+  {
+    "account_id": "ACC-9634",
+    "company": "Cascade Data",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Professional",
+    "arr_usd": 240000,
+    "seats_licensed": 315,
+    "seats_active": 201,
+    "products": [
+      "DataBridge Pro",
+      "CloudSync",
+      "SecureVault",
+      "AnalyticsHub"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 2,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-12-31",
+    "renewal_date": "2027-03-13",
+    "last_qbr_date": "2026-04-17",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 4,
+    "integrations_active": [],
+    "region": "EU-West",
+    "industry": "Logistics"
+  },
+  {
+    "account_id": "ACC-9010",
+    "company": "Wayne Enterprises",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Business",
+    "arr_usd": 120000,
+    "seats_licensed": 388,
+    "seats_active": 202,
+    "products": [
+      "WorkflowEngine",
+      "SecureVault",
+      "CloudSync",
+      "DataBridge Pro"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Increasing",
+    "open_tickets": 0,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-06-11",
+    "renewal_date": "2026-12-28",
+    "last_qbr_date": "2026-02-01",
+    "primary_contact": {
+      "name": "Taylor Smith",
+      "title": "IT Manager"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 82,
+    "integrations_active": [],
+    "region": "US-Central",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-6254",
+    "company": "Los Pollos Tech",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Starter",
+    "arr_usd": 240000,
+    "seats_licensed": 56,
+    "seats_active": 29,
+    "products": [
+      "SecureVault"
+    ],
+    "health_status": "Churning",
+    "usage_trend": "Inactive",
+    "open_tickets": 2,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2026-03-15",
+    "renewal_date": "2026-09-12",
+    "last_qbr_date": "2025-12-16",
+    "primary_contact": {
+      "name": "Taylor Smith",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [
+      "Customer skipped last two scheduled QBRs",
+      "IT team flagged integration reliability concerns",
+      "Customer expressed frustration with response times in last sync"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 78,
+    "integrations_active": [
+      "Salesforce"
+    ],
+    "region": "US-Central",
+    "industry": "Education"
+  },
+  {
+    "account_id": "ACC-8702",
+    "company": "Vortex Technologies",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 240000,
+    "seats_licensed": 307,
+    "seats_active": 144,
+    "products": [
+      "CloudSync"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Stable",
+    "open_tickets": 11,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-06-17",
+    "renewal_date": "2026-08-07",
+    "last_qbr_date": "2026-04-04",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "Director of IT"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 59,
+    "integrations_active": [
+      "Salesforce"
+    ],
+    "region": "US-East",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-2462",
+    "company": "Oceanic Holdings",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Starter",
+    "arr_usd": 12000,
+    "seats_licensed": 257,
+    "seats_active": 245,
+    "products": [
+      "DataBridge Pro"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Stable",
+    "open_tickets": 2,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-04-26",
+    "renewal_date": "2026-08-26",
+    "last_qbr_date": "2026-01-18",
+    "primary_contact": {
+      "name": "Jordan Park",
+      "title": "VP Engineering"
+    },
+    "escalation_notes": [
+      "IT team flagged integration reliability concerns",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": 5,
+    "last_login_days_ago": 24,
+    "integrations_active": [
+      "Okta",
+      "BigQuery",
+      "HubSpot"
+    ],
+    "region": "US-Central",
+    "industry": "Financial Services"
+  },
+  {
+    "account_id": "ACC-3930",
+    "company": "Praxis Corp",
+    "tam": "Olivia Grant",
+    "plan_tier": "Enterprise",
+    "arr_usd": 48000,
+    "seats_licensed": 1290,
+    "seats_active": 806,
+    "products": [
+      "AnalyticsHub",
+      "DataBridge Pro",
+      "SecureVault",
+      "CloudSync"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Declining",
+    "open_tickets": 9,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-11-23",
+    "renewal_date": "2026-11-13",
+    "last_qbr_date": "2026-05-10",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [
+      "Procurement team requested pricing review",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": 4,
+    "last_login_days_ago": 46,
+    "integrations_active": [
+      "PagerDuty",
+      "Okta"
+    ],
+    "region": "US-East",
+    "industry": "Financial Services"
+  },
+  {
+    "account_id": "ACC-4516",
+    "company": "Belbury Group",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Business",
+    "arr_usd": 48000,
+    "seats_licensed": 400,
+    "seats_active": 252,
+    "products": [
+      "CloudSync",
+      "SecureVault",
+      "DataBridge Pro"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 5,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2026-02-12",
+    "renewal_date": "2026-08-20",
+    "last_qbr_date": "2025-12-23",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "CTO"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 9,
+    "integrations_active": [
+      "Salesforce"
+    ],
+    "region": "US-West",
+    "industry": "Government"
+  },
+  {
+    "account_id": "ACC-1881",
+    "company": "Massive Dynamic",
+    "tam": "Fatima Al-Rashid",
+    "plan_tier": "Starter",
+    "arr_usd": 12000,
+    "seats_licensed": 350,
+    "seats_active": 321,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub",
+      "SecureVault",
+      "WorkflowEngine"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Inactive",
+    "open_tickets": 11,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2025-01-17",
+    "renewal_date": "2027-03-01",
+    "last_qbr_date": "2026-01-19",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Platform Lead"
+    },
+    "escalation_notes": [
+      "Negative sentiment detected in recent support tickets"
+    ],
+    "nps_score": null,
+    "last_login_days_ago": 16,
+    "integrations_active": [
+      "AWS S3",
+      "Zendesk"
+    ],
+    "region": "US-East",
+    "industry": "Media"
+  },
+  {
+    "account_id": "ACC-6233",
+    "company": "Meridian Analytics",
+    "tam": "Olivia Grant",
+    "plan_tier": "Professional",
+    "arr_usd": 120000,
+    "seats_licensed": 130,
+    "seats_active": 96,
+    "products": [
+      "CloudSync",
+      "DataBridge Pro",
+      "SecureVault"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Inactive",
+    "open_tickets": 6,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-06-02",
+    "renewal_date": "2026-11-14",
+    "last_qbr_date": "2026-02-09",
+    "primary_contact": {
+      "name": "Morgan Davis",
+      "title": "Chief Data Officer"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 79,
+    "integrations_active": [],
+    "region": "EU-West",
+    "industry": "Government"
+  },
+  {
+    "account_id": "ACC-6702",
+    "company": "Weyland Corp",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Business",
+    "arr_usd": 12000,
+    "seats_licensed": 955,
+    "seats_active": 822,
+    "products": [
+      "AnalyticsHub",
+      "SecureVault",
+      "DataBridge Pro"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Increasing",
+    "open_tickets": 8,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-09-12",
+    "renewal_date": "2026-08-14",
+    "last_qbr_date": "2026-05-01",
+    "primary_contact": {
+      "name": "Quinn Wilson",
+      "title": "Director of IT"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 3,
+    "integrations_active": [
+      "AWS S3",
+      "HubSpot",
+      "Slack"
+    ],
+    "region": "APAC",
+    "industry": "Education"
+  },
+  {
+    "account_id": "ACC-5524",
+    "company": "Aviato Systems",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 240000,
+    "seats_licensed": 1068,
+    "seats_active": 522,
+    "products": [
+      "SecureVault"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Increasing",
+    "open_tickets": 7,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-12-08",
+    "renewal_date": "2026-07-12",
+    "last_qbr_date": "2026-02-08",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Director of IT"
+    },
+    "escalation_notes": [],
+    "nps_score": 6,
+    "last_login_days_ago": 7,
+    "integrations_active": [
+      "Slack",
+      "HubSpot",
+      "AWS S3"
+    ],
+    "region": "US-East",
+    "industry": "Education"
+  },
+  {
+    "account_id": "ACC-8421",
+    "company": "Dharma Systems",
+    "tam": "Fatima Al-Rashid",
+    "plan_tier": "Starter",
+    "arr_usd": 500000,
+    "seats_licensed": 1994,
+    "seats_active": 1386,
+    "products": [
+      "CloudSync"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 5,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2026-03-28",
+    "renewal_date": "2026-10-16",
+    "last_qbr_date": "2026-02-28",
+    "primary_contact": {
+      "name": "Jordan Park",
+      "title": "Platform Lead"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 90,
+    "integrations_active": [
+      "Salesforce"
+    ],
+    "region": "US-East",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-8128",
+    "company": "Raviga Capital Tech",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Business",
+    "arr_usd": 12000,
+    "seats_licensed": 1026,
+    "seats_active": 532,
+    "products": [
+      "AnalyticsHub",
+      "WorkflowEngine"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Declining",
+    "open_tickets": 0,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-02-19",
+    "renewal_date": "2027-01-26",
+    "last_qbr_date": "2025-12-20",
+    "primary_contact": {
+      "name": "Jordan Park",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 56,
+    "integrations_active": [
+      "Okta",
+      "PagerDuty"
+    ],
+    "region": "APAC",
+    "industry": "Retail"
+  },
+  {
+    "account_id": "ACC-2293",
+    "company": "Bluth Company",
+    "tam": "Olivia Grant",
+    "plan_tier": "Starter",
+    "arr_usd": 96000,
+    "seats_licensed": 127,
+    "seats_active": 74,
+    "products": [
+      "WorkflowEngine",
+      "DataBridge Pro",
+      "AnalyticsHub"
+    ],
+    "health_status": "New",
+    "usage_trend": "Increasing",
+    "open_tickets": 6,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2025-09-18",
+    "renewal_date": "2027-02-19",
+    "last_qbr_date": "2026-01-26",
+    "primary_contact": {
+      "name": "Casey Brown",
+      "title": "Director of Infrastructure"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 14,
+    "integrations_active": [],
+    "region": "APAC",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-8956",
+    "company": "Hadley Industries",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Starter",
+    "arr_usd": 500000,
+    "seats_licensed": 1690,
+    "seats_active": 997,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub",
+      "WorkflowEngine",
+      "SecureVault"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Increasing",
+    "open_tickets": 11,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2024-07-21",
+    "renewal_date": "2026-10-19",
+    "last_qbr_date": "2025-12-02",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "VP Engineering"
+    },
+    "escalation_notes": [
+      "Customer expressed frustration with response times in last sync",
+      "Procurement team requested pricing review",
+      "Decision maker considering competing vendor evaluation"
+    ],
+    "nps_score": 5,
+    "last_login_days_ago": 77,
+    "integrations_active": [
+      "Salesforce",
+      "Google Workspace",
+      "Snowflake",
+      "Azure AD"
+    ],
+    "region": "APAC",
+    "industry": "Energy"
+  },
+  {
+    "account_id": "ACC-9670",
+    "company": "Stratos Inc",
+    "tam": "Lucas Ferreira",
+    "plan_tier": "Enterprise",
+    "arr_usd": 48000,
+    "seats_licensed": 1244,
+    "seats_active": 859,
+    "products": [
+      "CloudSync",
+      "DataBridge Pro",
+      "SecureVault",
+      "WorkflowEngine"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Stable",
+    "open_tickets": 6,
+    "p1_tickets_last_30d": 1,
+    "customer_since": "2024-09-25",
+    "renewal_date": "2026-08-21",
+    "last_qbr_date": "2026-04-16",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "Engineering Manager"
+    },
+    "escalation_notes": [
+      "Procurement team requested pricing review"
+    ],
+    "nps_score": 8,
+    "last_login_days_ago": 34,
+    "integrations_active": [
+      "HubSpot"
+    ],
+    "region": "US-West",
+    "industry": "Media"
+  },
+  {
+    "account_id": "ACC-8158",
+    "company": "Summit Solutions",
+    "tam": "Yuki Tanaka",
+    "plan_tier": "Enterprise",
+    "arr_usd": 240000,
+    "seats_licensed": 1662,
+    "seats_active": 1510,
+    "products": [
+      "CloudSync",
+      "AnalyticsHub"
+    ],
+    "health_status": "Healthy",
+    "usage_trend": "Inactive",
+    "open_tickets": 2,
+    "p1_tickets_last_30d": 0,
+    "customer_since": "2024-10-02",
+    "renewal_date": "2026-08-18",
+    "last_qbr_date": "2026-03-06",
+    "primary_contact": {
+      "name": "Sam Okafor",
+      "title": "VP Engineering"
+    },
+    "escalation_notes": [],
+    "nps_score": null,
+    "last_login_days_ago": 6,
+    "integrations_active": [
+      "Azure AD",
+      "AWS S3",
+      "Jira",
+      "Slack"
+    ],
+    "region": "US-East",
+    "industry": "Education"
+  },
+  {
+    "account_id": "ACC-1899",
+    "company": "Crestline Consulting",
+    "tam": "Rohan Mehta",
+    "plan_tier": "Business",
+    "arr_usd": 120000,
+    "seats_licensed": 1411,
+    "seats_active": 1390,
+    "products": [
+      "DataBridge Pro",
+      "AnalyticsHub"
+    ],
+    "health_status": "At Risk",
+    "usage_trend": "Increasing",
+    "open_tickets": 8,
+    "p1_tickets_last_30d": 2,
+    "customer_since": "2026-02-13",
+    "renewal_date": "2026-08-02",
+    "last_qbr_date": "2025-12-17",
+    "primary_contact": {
+      "name": "Alex Morgan",
+      "title": "VP Technology"
+    },
+    "escalation_notes": [
+      "IT team flagged integration reliability concerns",
+      "Decision maker considering competing vendor evaluation",
+      "Customer expressed frustration with response times in last sync"
+    ],
+    "nps_score": 9,
+    "last_login_days_ago": 75,
+    "integrations_active": [
+      "Zendesk",
+      "AWS S3"
+    ],
+    "region": "US-East",
+    "industry": "Healthcare"
+  }
+]

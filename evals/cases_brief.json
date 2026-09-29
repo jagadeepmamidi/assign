@@ -1,0 +1,7 @@
+[
+  {"id":"brief-1","account_id":"ACC-3336"},
+  {"id":"brief-2","account_id":"ACC-3033"},
+  {"id":"brief-3","account_id":"ACC-4654"},
+  {"id":"brief-4","account_id":"ACC-DOES-NOT-EXIST"},
+  {"id":"brief-5","account_id":"ACC-3336","window_days":0}
+]

@@ -1,0 +1,2 @@
+You detect churn and escalation signals for a customer account. Return JSON {"signals": [{"ticket_id": string, "quote": string, "signal_type": "churn" or "escalation", "why_matters": string}]}.
+Quotes MUST be copied verbatim from supplied ticket bodies or escalation notes. Do not make up quotes. Include only material signals.

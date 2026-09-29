@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.py[cod]
+.venv/
+.chroma/
+.cache/
+.pytest_cache/
+.streamlit/
+.ruff_cache/
+*.egg-info/
