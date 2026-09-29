@@ -14,71 +14,65 @@ from src.service import InvoiceDecisionEngine
 
 st.set_page_config(
     page_title="Invoice Decision Engine",
-    page_icon="🧾",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 st.markdown(
     """
     <style>
-    :root { color-scheme: dark; }
-    .stApp { background: #0b0f17; }
-    [data-testid="stAppViewContainer"] { background: #0b0f17; }
-    [data-testid="stHeader"] { background: rgba(11, 15, 23, 0.9); }
-    [data-testid="stSidebar"] { background: #101622; border-right: 1px solid #263044; }
-    [data-testid="stSidebarContent"] { padding: 1.5rem 1.1rem; }
-    .block-container { max-width: 1440px; padding: 2.5rem 3rem 4rem; }
-    h1, h2, h3 { letter-spacing: -0.02em; }
-    h1 { font-size: 2.25rem !important; margin-bottom: 0.35rem !important; }
-    h2 { font-size: 1.4rem !important; }
+    :root { color-scheme: light; }
+    .stApp { background: #f7f6f3; color: #202522; font-family: Aptos, system-ui, sans-serif; }
+    [data-testid="stAppViewContainer"] { background: #f7f6f3; }
+    [data-testid="stHeader"] { background: rgba(247, 246, 243, 0.94); }
+    [data-testid="stSidebar"] { background: #efeee9; border-right: 1px solid #dfddd7; }
+    [data-testid="stSidebarContent"] { padding: 1.4rem 1.1rem; }
+    .block-container { max-width: 1220px; padding: 2.5rem 2.2rem 4.5rem; }
+    h1, h2, h3 { color: #202522; letter-spacing: -0.025em; }
+    h1 { font-size: clamp(2rem, 4vw, 3.15rem) !important; line-height: 1.02 !important; margin: 0 0 0.55rem !important; }
+    h2 { font-size: 1.5rem !important; }
     h3 { font-size: 1.05rem !important; }
-    [data-testid="stMetric"] {
-        background: #131a27; border: 1px solid #263044; border-radius: 12px;
-        padding: 1rem 1.1rem; min-height: 108px;
-    }
-    [data-testid="stMetricLabel"] { color: #93a0b5; }
-    [data-testid="stMetricValue"] { color: #f3f6fb; font-variant-numeric: tabular-nums; }
-    [data-testid="stVerticalBlockBorderWrapper"] {
-        border-color: #263044; border-radius: 16px; background: #101622;
-    }
-    [data-testid="stFileUploader"] {
-        background: #131a27; border: 1px dashed #4a5a76; border-radius: 12px; padding: 0.35rem;
-    }
-    [data-testid="stBaseButton-secondary"], [data-testid="stBaseButton-primary"] {
-        min-height: 2.7rem; border-radius: 9px; font-weight: 650;
+    p, label, [data-testid="stCaptionContainer"] { color: #59615d; }
+    .workflow-label { color: #8a4d32; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 0.55rem; }
+    .subtitle { max-width: 680px; color: #59615d; font-size: 1rem; line-height: 1.6; margin: 0 0 1.65rem; }
+    .section-copy { color: #69716c; font-size: 0.9rem; line-height: 1.5; max-width: 65ch; }
+    [data-testid="stVerticalBlockBorderWrapper"] { background: #fff; border-color: #dfddd7; border-radius: 10px; }
+    [data-testid="stMetric"] { background: #fff; border: 1px solid #dfddd7; border-radius: 8px; padding: 0.85rem 1rem; min-height: 92px; }
+    [data-testid="stMetricLabel"] { color: #69716c; }
+    [data-testid="stMetricValue"] { color: #202522; font-variant-numeric: tabular-nums; }
+    [data-testid="stFileUploader"] { background: #faf9f7; border: 1px dashed #b9b6ae; border-radius: 8px; padding: 0.3rem; }
+    [data-testid="stBaseButton-primary"], [data-testid="stBaseButton-secondary"] {
+        min-height: 2.65rem; border-radius: 6px; font-weight: 700; font-size: 0.92rem;
         transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
     }
-    [data-testid="stBaseButton-primary"] { background: #5b5ce2; border-color: #7778f0; }
-    [data-testid="stBaseButton-primary"]:hover { background: #7273ef; border-color: #9a9bf8; transform: translateY(-1px); }
-    [data-testid="stBaseButton-secondary"]:hover { border-color: #818cf8; background: #1a2335; transform: translateY(-1px); }
+    [data-testid="stBaseButton-primary"] { background: #202522; border-color: #202522; color: #fff; }
+    [data-testid="stBaseButton-primary"]:hover { background: #343b37; border-color: #343b37; transform: translateY(-1px); }
+    [data-testid="stBaseButton-secondary"] { background: #fff; border-color: #a9aaa4; color: #202522; }
+    [data-testid="stBaseButton-secondary"]:hover { background: #f0efeb; border-color: #202522; transform: translateY(-1px); }
     button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex="0"]:focus-visible {
-        outline: 2px solid #a5b4fc !important; outline-offset: 2px !important;
+        outline: 2px solid #8a4d32 !important; outline-offset: 2px !important;
     }
-    .eyebrow { color: #8b93ff; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.4rem; }
-    .subtitle { color: #aab5c8; max-width: 760px; font-size: 1.02rem; line-height: 1.55; }
-    .brand-mark { color: #a5b4fc; font-weight: 800; letter-spacing: 0.06em; font-size: 0.85rem; text-transform: uppercase; }
-    .brand-note { color: #8190aa; font-size: 0.77rem; line-height: 1.4; margin-top: 0.35rem; }
-    .status-panel { border-radius: 14px; padding: 1.15rem 1.25rem; margin: 0.25rem 0 1rem; border: 1px solid; }
-    .status-panel h2 { margin: 0.2rem 0 0.35rem; font-size: 1.55rem !important; }
-    .status-panel p { color: #c9d2e2; margin: 0; line-height: 1.5; }
-    .status-panel.approve { background: #10271f; border-color: #2b8a67; }
-    .status-panel.variance { background: #2c2412; border-color: #b58a32; }
-    .status-panel.review { background: #2a2113; border-color: #b8792f; }
-    .status-panel.reject { background: #2d171d; border-color: #b65363; }
-    .status-label { color: #d7deeb; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
-    .field-card { background: #131a27; border: 1px solid #263044; border-radius: 10px; padding: 0.7rem 0.8rem; min-height: 76px; margin-bottom: 0.6rem; }
-    .field-label { color: #8997ae; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; }
-    .field-value { color: #f3f6fb; font-size: 0.98rem; font-weight: 650; margin-top: 0.28rem; overflow-wrap: anywhere; }
-    .timeline { border-left: 2px solid #35415a; padding-left: 1rem; margin: 0.4rem 0 0.75rem 0.45rem; }
-    .timeline-event { position: relative; padding: 0 0 1rem 0.2rem; }
-    .timeline-event::before { content: ""; position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #818cf8; left: -1.36rem; top: 0.32rem; }
-    .timeline-name { color: #e5e9f2; font-weight: 700; }
-    .timeline-time { color: #8190aa; font-size: 0.76rem; margin-left: 0.45rem; }
-    .timeline-message { color: #aab5c8; margin-top: 0.2rem; line-height: 1.45; }
-    .section-help { color: #8997ae; font-size: 0.83rem; line-height: 1.45; }
+    [data-baseweb="select"] > div, [data-baseweb="input"] > div, textarea { border-radius: 6px !important; }
+    .status-panel { border-radius: 8px; padding: 1.05rem 1.15rem; margin: 0.1rem 0 1.1rem; border: 1px solid; }
+    .status-panel h2 { margin: 0.2rem 0 0.35rem; font-size: 1.45rem !important; }
+    .status-panel p { margin: 0; line-height: 1.5; }
+    .status-panel.approve { background: #edf3ec; border-color: #9eb89e; }
+    .status-panel.variance { background: #fbf3db; border-color: #d4bc73; }
+    .status-panel.review { background: #fff4e5; border-color: #d6a468; }
+    .status-panel.reject { background: #fdebec; border-color: #d69ca2; }
+    .status-label { color: #59615d; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+    .field-card { background: #faf9f7; border: 1px solid #e5e3de; border-radius: 6px; padding: 0.65rem 0.75rem; min-height: 70px; margin-bottom: 0.55rem; }
+    .field-label { color: #69716c; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .field-value { color: #202522; font-size: 0.95rem; font-weight: 650; margin-top: 0.25rem; overflow-wrap: anywhere; }
+    .timeline { border-left: 2px solid #d9d7d0; padding-left: 0.95rem; margin: 0.4rem 0 0.75rem 0.4rem; }
+    .timeline-event { position: relative; padding: 0 0 0.9rem 0.2rem; }
+    .timeline-event::before { content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #8a4d32; left: -1.3rem; top: 0.33rem; }
+    .timeline-name { color: #202522; font-weight: 700; }
+    .timeline-time { color: #7c837f; font-size: 0.75rem; margin-left: 0.45rem; }
+    .timeline-message { color: #59615d; margin-top: 0.2rem; line-height: 1.45; }
+    .utility-note { color: #69716c; font-size: 0.82rem; line-height: 1.45; }
     @media (prefers-reduced-motion: reduce) {
-        [data-testid="stBaseButton-secondary"], [data-testid="stBaseButton-primary"] { transition: none; }
+        [data-testid="stBaseButton-primary"], [data-testid="stBaseButton-secondary"] { transition: none; }
     }
     </style>
     """,
@@ -97,10 +91,10 @@ def _display(value: object | None) -> str:
 
 def _status_meta(status: DecisionStatus) -> tuple[str, str, str]:
     metadata = {
-        DecisionStatus.APPROVE: ("APPROVED", "approve", "Payment controls passed."),
-        DecisionStatus.APPROVE_WITH_VARIANCE: ("APPROVED WITH VARIANCE", "variance", "Payment controls passed with a documented variance."),
-        DecisionStatus.MANUAL_REVIEW: ("MANUAL REVIEW", "review", "A person must resolve the blocking evidence before payment."),
-        DecisionStatus.REJECT: ("REJECTED", "reject", "The invoice failed a hard payment control."),
+        DecisionStatus.APPROVE: ("Approved", "approve", "Payment controls passed."),
+        DecisionStatus.APPROVE_WITH_VARIANCE: ("Approved with variance", "variance", "Payment controls passed with a documented variance."),
+        DecisionStatus.MANUAL_REVIEW: ("Manual review", "review", "A person must resolve the blocking evidence before payment."),
+        DecisionStatus.REJECT: ("Rejected", "reject", "The invoice failed a hard payment control."),
     }
     return metadata[status]
 
@@ -127,11 +121,7 @@ def _render_field_grid(fields) -> None:
 
 
 def _render_warnings(warnings: Iterable[str]) -> None:
-    warning_list = list(warnings)
-    if not warning_list:
-        return
-    st.markdown("#### Extraction notes")
-    for warning in warning_list:
+    for warning in warnings:
         st.warning(warning, icon="!")
 
 
@@ -142,30 +132,27 @@ def show_decision(decision: Decision) -> None:
         f'<div class="status-label">{summary}</div><h2>{label}</h2><p>{decision.reason}</p></div>',
         unsafe_allow_html=True,
     )
-
     fields = decision.extraction.fields
-    metrics = st.columns(4)
-    metrics[0].metric("Decision ID", decision.id)
-    metrics[1].metric("Vendor", _display(decision.vendor.name if decision.vendor else None))
-    metrics[2].metric("PO match", _display(decision.purchase_order.po_number if decision.purchase_order else None))
-    metrics[3].metric("Invoice total", _display(fields.total))
+    metrics = st.columns(3)
+    metrics[0].metric("Vendor", _display(decision.vendor.name if decision.vendor else None))
+    metrics[1].metric("PO match", _display(decision.purchase_order.po_number if decision.purchase_order else None))
+    metrics[2].metric("Invoice total", _display(fields.total))
+    st.caption(f"Decision {decision.id} · {decision.created_at}")
 
-    st.markdown('<div class="eyebrow" style="margin-top:1.4rem">Evidence & trace</div>', unsafe_allow_html=True)
-    extraction_tab, rules_tab, audit_tab, json_tab = st.tabs(["Extraction", "Rule checks", "Audit trail", "Raw JSON"])
+    extraction_tab, rules_tab, audit_tab, json_tab = st.tabs(["Fields", "Rules", "Audit", "JSON"])
     with extraction_tab:
-        st.markdown("#### Normalized fields")
+        st.subheader("Normalized fields")
         _render_field_grid(fields)
-        meta = st.columns(4)
-        meta[0].metric("Method", decision.extraction.method)
-        meta[1].metric("Source", decision.extraction.source)
-        meta[2].metric("Pages", decision.extraction.pages)
-        meta[3].metric("OCR attempted", "Yes" if decision.extraction.ocr_attempted else "No")
+        st.caption(
+            f"Extraction method: {decision.extraction.method} · Source: {decision.extraction.source} · "
+            f"Pages: {decision.extraction.pages} · OCR attempted: {'yes' if decision.extraction.ocr_attempted else 'no'}"
+        )
         confidence_rows = [
             {"Field": name.replace("_", " ").title(), "Value": _display(getattr(fields, name)), "Confidence": f"{confidence:.0%}"}
             for name, confidence in fields.confidence.items()
         ]
         if confidence_rows:
-            st.markdown("#### Field confidence")
+            st.subheader("Field confidence")
             st.dataframe(confidence_rows, use_container_width=True, hide_index=True)
         _render_warnings(decision.extraction.warnings)
     with rules_tab:
@@ -173,7 +160,10 @@ def show_decision(decision: Decision) -> None:
             [{"Rule": check.name, "State": check.state.value, "Result": check.message} for check in decision.rule_checks],
             use_container_width=True,
             hide_index=True,
-            column_config={"Rule": st.column_config.TextColumn("Rule", width="medium"), "State": st.column_config.TextColumn("State", width="small")},
+            column_config={
+                "Rule": st.column_config.TextColumn("Rule", width="medium"),
+                "State": st.column_config.TextColumn("State", width="small"),
+            },
         )
     with audit_tab:
         st.markdown('<div class="timeline">', unsafe_allow_html=True)
@@ -192,29 +182,20 @@ engine = get_engine()
 history = engine.list_decisions()
 
 with st.sidebar:
-    st.markdown('<div class="brand-mark">Invoice Decision Engine</div>', unsafe_allow_html=True)
-    st.markdown('<div class="brand-note">A transparent invoice-to-decision workspace for AP review.</div>', unsafe_allow_html=True)
-    st.divider()
-    st.markdown('<div class="eyebrow">Workspace</div>', unsafe_allow_html=True)
+    st.markdown("**Invoice Decision Engine**")
+    st.markdown('<p class="utility-note">Utilities are kept here so the main workflow stays focused.</p>', unsafe_allow_html=True)
+    with st.expander("Demo reset"):
+        st.caption("Restore seeded vendors, POs, split-invoice history, and duplicate history.")
+        if st.button("Reset seeded data", use_container_width=True):
+            engine.reset_demo()
+            st.session_state.pop("last_decision", None)
+            st.rerun()
     st.caption(f"{len(history)} saved decision(s)")
-    if st.button("Reset demo data", use_container_width=True, help="Restore seeded vendors, POs, and demonstration history"):
-        engine.reset_demo()
-        st.session_state.pop("last_decision", None)
-        st.rerun()
-    if history:
-        history_options = {item.id: item for item in history}
-        selected_id = st.selectbox(
-            "Open a previous decision",
-            options=list(history_options),
-            format_func=lambda value: f"{history_options[value].status.value.replace('_', ' ')} · {value}",
-        )
-        if st.button("Open selected decision", use_container_width=True):
-            st.session_state.last_decision = history_options[selected_id]
 
-st.markdown('<div class="eyebrow">Accounts payable operations</div>', unsafe_allow_html=True)
+st.markdown('<div class="workflow-label">Accounts payable workflow</div>', unsafe_allow_html=True)
 st.title("Invoice Decision Engine")
 st.markdown(
-    '<p class="subtitle">Turn an invoice document into a reasoned payment decision. Every extracted field, rule result, and review event stays visible.</p>',
+    '<p class="subtitle">Turn an invoice document into a reasoned payment decision. Review the evidence, then act on the result.</p>',
     unsafe_allow_html=True,
 )
 
@@ -224,62 +205,70 @@ summary[1].metric("Needs review", sum(item.status == DecisionStatus.MANUAL_REVIE
 summary[2].metric("Latest result", history[0].status.value.replace("_", " ") if history else "No activity")
 
 st.markdown("<div style='height: 1rem'></div>", unsafe_allow_html=True)
-input_column, output_column = st.columns([0.9, 1.35], gap="large")
+with st.container(border=True):
+    st.subheader("Process an invoice")
+    st.markdown('<p class="section-copy">Choose one action. Demo data is reproducible; uploaded files use the same decision engine.</p>', unsafe_allow_html=True)
+    demo_column, upload_column = st.columns(2, gap="large")
 
-with input_column:
-    with st.container(border=True):
-        st.markdown('<div class="eyebrow">1 · Start processing</div>', unsafe_allow_html=True)
-        st.subheader("Choose a demo or upload an invoice")
-        st.markdown('<p class="section-help">Use a seeded scenario to explore the rules, or upload a PDF, text invoice, or structured JSON document.</p>', unsafe_allow_html=True)
-
+    with demo_column:
+        st.markdown("#### Try a seeded scenario")
         scenarios = list_scenarios()
         scenario_labels = {item.name: item.key for item in scenarios}
-        selected_label = st.selectbox("Demo scenario", list(scenario_labels), label_visibility="visible")
+        selected_label = st.selectbox("Demo scenario", list(scenario_labels))
         selected = scenario(scenario_labels[selected_label])
         st.caption(selected.description)
-        if st.button("Process demo scenario", type="primary", use_container_width=True):
+        if st.button("Run selected scenario", type="primary", use_container_width=True):
             if selected.filename.lower().endswith(".pdf"):
                 st.session_state.last_decision = engine.process_document(selected.document_text.encode("utf-8"), filename=selected.filename)
             else:
                 st.session_state.last_decision = engine.process_text(selected.document_text, filename=selected.filename, source="demo")
 
-        st.markdown("<div style='height: 0.35rem'></div>", unsafe_allow_html=True)
+    with upload_column:
+        st.markdown("#### Upload an invoice")
         uploaded = st.file_uploader("Invoice document", type=["pdf", "txt", "json"], help="PDF, text, or structured JSON")
         if uploaded:
             st.caption(f"Selected: {uploaded.name} · {uploaded.size / 1024:.1f} KB")
-        if st.button("Process uploaded invoice", use_container_width=True, disabled=uploaded is None):
+        if st.button("Review uploaded invoice", use_container_width=True, disabled=uploaded is None):
             if uploaded:
                 st.session_state.last_decision = engine.process_document(uploaded.getvalue(), filename=uploaded.name)
 
-        with st.expander("Structured JSON fallback"):
-            example = {
-                "vendor_name": "Acme Industrial Supplies",
-                "invoice_number": "INV-JSON-001",
-                "invoice_date": "2026-09-20",
-                "po_reference": "PO-1001",
-                "currency": "USD",
-                "subtotal": "9.25",
-                "tax": "0.75",
-                "total": "10.00",
-                "confidence": {"vendor_name": 0.99, "invoice_number": 0.99, "invoice_date": 0.99, "currency": 0.99, "total": 0.99},
-            }
-            payload = st.text_area("Invoice JSON", json.dumps(example, indent=2), height=220, label_visibility="visible")
-            if st.button("Process JSON", use_container_width=True):
-                try:
-                    st.session_state.last_decision = engine.process_structured(json.loads(payload), filename="invoice.json")
-                except (ValueError, TypeError, json.JSONDecodeError) as exc:
-                    st.error(f"Could not process JSON: {exc}")
+with st.expander("Use structured JSON instead"):
+    st.caption("Use this only when a source system already provides normalized invoice fields.")
+    example = {
+        "vendor_name": "Acme Industrial Supplies",
+        "invoice_number": "INV-JSON-001",
+        "invoice_date": "2026-09-20",
+        "po_reference": "PO-1001",
+        "currency": "USD",
+        "subtotal": "9.25",
+        "tax": "0.75",
+        "total": "10.00",
+        "confidence": {"vendor_name": 0.99, "invoice_number": 0.99, "invoice_date": 0.99, "currency": 0.99, "total": 0.99},
+    }
+    payload = st.text_area("Invoice JSON", json.dumps(example, indent=2), height=220)
+    if st.button("Review JSON invoice", use_container_width=True):
+        try:
+            st.session_state.last_decision = engine.process_structured(json.loads(payload), filename="invoice.json")
+        except (ValueError, TypeError, json.JSONDecodeError) as exc:
+            st.error(f"Could not process JSON: {exc}")
 
-with output_column:
-    with st.container(border=True):
-        st.markdown('<div class="eyebrow">2 · Review decision</div>', unsafe_allow_html=True)
-        decision = st.session_state.get("last_decision")
-        if decision:
-            show_decision(decision)
-        else:
-            st.subheader("Your decision will appear here")
-            st.markdown(
-                '<p class="section-help">Run a scenario or upload an invoice to see the status, matching evidence, rule checks, and full audit trail.</p>',
-                unsafe_allow_html=True,
-            )
-            st.info("No invoice processed yet.", icon="ℹ️")
+st.markdown("<div style='height: 1rem'></div>", unsafe_allow_html=True)
+with st.container(border=True):
+    st.subheader("Decision explanation")
+    decision = st.session_state.get("last_decision")
+    if decision:
+        show_decision(decision)
+    else:
+        st.markdown('<p class="section-copy">The result appears here after you run one of the actions above. Nothing is hidden behind a separate page.</p>', unsafe_allow_html=True)
+        st.info("No invoice processed yet.", icon="ℹ️")
+
+if history:
+    with st.expander(f"Recent decisions ({len(history)})"):
+        st.dataframe(
+            [
+                {"Status": item.status.value.replace("_", " "), "Decision": item.id, "Vendor": _display(item.vendor.name if item.vendor else None), "PO": _display(item.purchase_order.po_number if item.purchase_order else None), "Reason": item.reason}
+                for item in history
+            ],
+            use_container_width=True,
+            hide_index=True,
+        )
