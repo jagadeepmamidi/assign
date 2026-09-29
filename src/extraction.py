@@ -37,6 +37,46 @@ def _label_value(text: str, label_pattern: str) -> str | None:
     match = pattern.search(text)
     return match.group(1).strip() if match else None
 
+def _receipt_invoice_number(text: str) -> str | None:
+    match = re.search(r"\bReceipt\s*\.?\s*(?:No|Number)\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]+)", text, re.IGNORECASE)
+    return match.group(1).strip() if match else None
+
+
+def _receipt_date(text: str) -> str | None:
+    match = re.search(
+        r"\bReceipt\s+Date\s*[:#-]?\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})",
+        text,
+        re.IGNORECASE,
+    )
+    return match.group(1) if match else None
+
+
+def _header_vendor(text: str) -> str | None:
+    for line in text.splitlines()[:8]:
+        candidate = line.strip().strip("|# ")
+        candidate = re.split(r"\s+(?:Beside|GSTN)\b|\s*\(", candidate, maxsplit=1, flags=re.IGNORECASE)[0].strip()
+        if (
+            candidate
+            and ":" not in candidate
+            and "INVOICE" not in candidate.upper()
+            and re.fullmatch(r"[A-Z0-9][A-Z0-9 .&-]{3,}", candidate)
+        ):
+            return candidate
+    return None
+
+
+def _receipt_total(text: str) -> Decimal | None:
+    patterns = (
+        r"[₹]\s*([\d,]+(?:\.\d{1,2})?)\s+Total\s+Amount",
+        r"(?:Total\s+Amount|Amount\s+Due|Grand\s+Total)\s*[:#-]?\s*[₹$€£]?\s*([\d,]+(?:\.\d{1,2})?)",
+        r"Inclusive\s+of\s+GST\s*[₹]?\s*([\d,]+(?:\.\d{1,2})?)",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            return _amount(match.group(1))
+    return None
+
 
 def _amount(value: str | None) -> Decimal | None:
     if not value:
@@ -75,6 +115,8 @@ def _currency(text: str) -> str | None:
         return "EUR"
     if "GBP" in upper or "£" in text:
         return "GBP"
+    if "INR" in upper or "₹" in text or re.search(r"\bRs\.?\b", text, re.IGNORECASE):
+        return "INR"
     if "USD" in upper or "$" in text:
         return "USD"
     return None
@@ -86,14 +128,14 @@ def extract_text(text: str, *, source: str = "text", digest: str | None = None, 
     fields = InvoiceFields(source_text=text[:12000])
     values: dict[str, str | None] = {name: _label_value(text, pattern) for name, pattern in _LABELS.items()}
 
-    fields.vendor_name = values["vendor_name"]
-    fields.invoice_number = values["invoice_number"]
-    fields.invoice_date = _date(values["invoice_date"])
+    fields.vendor_name = values["vendor_name"] or _header_vendor(text)
+    fields.invoice_number = values["invoice_number"] or _receipt_invoice_number(text)
+    fields.invoice_date = _date(values["invoice_date"]) or _date(_receipt_date(text))
     fields.po_reference = values["po_reference"]
     fields.currency = _currency(text)
     fields.subtotal = _amount(values["subtotal"])
     fields.tax = _amount(values["tax"])
-    fields.total = _amount(values["total"])
+    fields.total = _amount(values["total"]) or _receipt_total(text)
 
     if fields.po_reference:
         po_match = re.search(r"\bPO[-\s#]*[A-Z0-9-]+\b", fields.po_reference, re.IGNORECASE)
@@ -126,8 +168,6 @@ def extract_text(text: str, *, source: str = "text", digest: str | None = None, 
         document_hash=digest,
         warnings=list(fields.warnings),
     )
-
-
 def _pdf_text(data: bytes) -> tuple[str, int]:
     from pypdf import PdfReader
 

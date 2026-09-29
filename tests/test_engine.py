@@ -16,6 +16,15 @@ Tax: 75.00
 Total: 1000.00
 """
 
+VIT_RECEIPT_TEXT = """VIT-AP UNIVERSITY (Event Registration) Beside AP Secretariat, Ainavolu - 522237. GSTN 37AACTV1896M2ZN
+INVOICE CUM RECEIPT
+Receipt Date: 2026-09-22 20:34:46 Receipt.No VIT-26-27-010718 Transaction Details
+Description Unit Price
+Graduands hostel accommodation 1 ₹350.00 Total Amount
+Inclusive of GST ₹350.00
+Payment Mode UPI
+"""
+
 
 def engine(tmp_path: Path) -> InvoiceDecisionEngine:
     return InvoiceDecisionEngine(tmp_path / "invoice.sqlite3")
@@ -29,6 +38,21 @@ def test_clean_invoice_is_approved_with_rule_evidence(tmp_path: Path) -> None:
     assert decision.purchase_order.po_number == "PO-1001"
     assert any(rule.name == "tax_reconciliation" and rule.state.value == "PASS" for rule in decision.rule_checks)
     assert [event.name for event in decision.audit_events] == ["received", "extracted", "validated", "matched", "decided"]
+
+
+def test_uploaded_receipt_extracts_visible_fields_but_requires_manual_review(tmp_path: Path) -> None:
+    decision = engine(tmp_path).process_text(VIT_RECEIPT_TEXT, source="pdf-text")
+    fields = decision.extraction.fields
+
+    assert fields.vendor_name == "VIT-AP UNIVERSITY"
+    assert fields.invoice_number == "VIT-26-27-010718"
+    assert fields.invoice_date == "2026-09-22"
+    assert fields.currency == "INR"
+    assert fields.total == 350
+    assert fields.po_reference is None
+    assert decision.status == DecisionStatus.MANUAL_REVIEW
+    assert "vendor is unknown" in decision.reason
+    assert "PO matching could not run" in decision.reason
 
 
 def test_missing_invoice_number_requires_manual_review(tmp_path: Path) -> None:
