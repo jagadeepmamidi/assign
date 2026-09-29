@@ -1,112 +1,81 @@
-"""FastAPI entry point for triage and account briefs."""
+"""FastAPI interface for invoice processing and decision history."""
 
 from __future__ import annotations
 
-import json
+from typing import Any
 
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, model_validator
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from pydantic import BaseModel, Field, model_validator
 
-from .account_brief import AccountBrief, build_account_brief  # pyright: ignore[reportMissingImports]
-from .retrieval import get_retriever  # pyright: ignore[reportMissingImports]
-from .triage import (  # pyright: ignore[reportMissingImports]
-    TriageResult,
-    stream_draft,
-    triage_ticket,
-    triage_ticket_text,
-)
+from .config import settings
+from .models import Decision, DemoScenario
+from .service import InvoiceDecisionEngine, demo_scenarios
 
-app = FastAPI(title="Zycus Support AI", version="1.0.0")
+app = FastAPI(title="Invoice Decision Engine", version="2.0.0")
+engine = InvoiceDecisionEngine()
 
 
-class TriageRequest(BaseModel):
-    subject: str | None = None
-    body: str | None = None
-    text: str | None = None
+class ProcessRequest(BaseModel):
+    document_text: str | None = None
+    filename: str = "invoice.txt"
+    structured_invoice: dict[str, Any] | None = None
 
     @model_validator(mode="after")
-    def one_input_shape(self):
-        if self.text is None and (self.subject is None or self.body is None):
-            raise ValueError("Provide either text or both subject and body")
-        if self.text is not None and (self.subject is not None or self.body is not None):
-            raise ValueError("Provide text, or subject and body, not both")
+    def has_input(self):
+        if self.document_text is None and self.structured_invoice is None:
+            raise ValueError("Provide document_text or structured_invoice.")
         return self
 
 
-def _triage(request: TriageRequest) -> tuple[TriageResult, str, str]:
-    if request.text is not None:
-        result = triage_ticket_text(request.text)
-        lines = request.text.splitlines()
-        return result, lines[0] if lines else "", "\n".join(lines[1:])
-    return triage_ticket(request.subject or "", request.body or ""), request.subject or "", request.body or ""
+class HistoryResponse(BaseModel):
+    decisions: list[Decision]
 
 
-@app.post("/triage", response_model=TriageResult)
-def triage(request: TriageRequest) -> TriageResult:
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+
+@app.post("/invoices/process", response_model=Decision)
+def process_invoice(request: ProcessRequest) -> Decision:
     try:
-        return _triage(request)[0]
-    except RuntimeError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+        if request.structured_invoice is not None:
+            return engine.process_structured(request.structured_invoice, filename=request.filename)
+        return engine.process_text(request.document_text or "", filename=request.filename, source="api-text")
+    except (ValueError, TypeError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
-@app.post("/triage/stream")
-def triage_stream(request: TriageRequest):
+@app.post("/invoices/upload", response_model=Decision)
+async def upload_invoice(file: UploadFile = File(...)) -> Decision:
+    data = await file.read()
+    if len(data) > settings.upload_max_bytes:
+        raise HTTPException(status_code=413, detail="Invoice file is larger than the configured upload limit.")
     try:
-        result, subject, body = _triage(request)
-        hits = get_retriever().search(f"Subject: {subject}\n\nBody: {body}", k=3)
-    except RuntimeError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
-
-    def events():
-        classification = {
-            key: value
-            for key, value in result.model_dump().items()
-            if key in {"product", "product_area", "category", "urgency", "recommended_team", "matched_kb_doc"}
-        }
-        yield f"event: classification\ndata: {json.dumps(classification, ensure_ascii=False, sort_keys=True)}\n\n"
-        try:
-            for token in stream_draft(subject, body, result, hits):
-                yield f"event: draft\ndata: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
-        except RuntimeError as exc:
-            yield f"event: error\ndata: {json.dumps({'detail': str(exc)})}\n\n"
-        yield "event: done\ndata: {}\n\n"
-
-    return StreamingResponse(events(), media_type="text/event-stream")
+        return engine.process_document(data, filename=file.filename or "invoice.pdf")
+    except (ValueError, TypeError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
-@app.get("/account-brief/{account_id}", response_model=AccountBrief)
-def account_brief(account_id: str) -> AccountBrief:
-    try:
-        return build_account_brief(account_id)
-    except RuntimeError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+@app.get("/decisions/{decision_id}", response_model=Decision)
+def get_decision(decision_id: str) -> Decision:
+    decision = engine.get_decision(decision_id)
+    if decision is None:
+        raise HTTPException(status_code=404, detail="Decision not found.")
+    return decision
 
 
-@app.get("/account-brief/{account_id}/stream")
-def account_brief_stream(account_id: str):
-    """Stream the deterministic brief section by section over SSE.
+@app.get("/decisions", response_model=HistoryResponse)
+def list_decisions(limit: int = 50) -> HistoryResponse:
+    return HistoryResponse(decisions=engine.list_decisions(limit))
 
-    The brief itself is computed (and cached) before streaming starts, so the
-    determinism guarantee is preserved; streaming here is delivery, not generation.
-    """
-    try:
-        brief = build_account_brief(account_id)
-    except RuntimeError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
-    def events():
-        header = {
-            "account_id": brief.account_id,
-            "company": brief.company,
-            "account_found": brief.account_found,
-            "executive_summary": brief.executive_summary,
-        }
-        yield f"event: summary\ndata: {json.dumps(header, ensure_ascii=False, sort_keys=True)}\n\n"
-        for risk in brief.open_risks:
-            yield f"event: risk\ndata: {risk.model_dump_json()}\n\n"
-        for point in brief.talking_points:
-            yield f"event: talking_point\ndata: {json.dumps({'point': point}, ensure_ascii=False)}\n\n"
-        yield "event: done\ndata: {}\n\n"
+@app.post("/demo/reset")
+def reset_demo() -> dict[str, str]:
+    engine.reset_demo()
+    return {"status": "reset", "message": "Seeded vendors, POs, and demonstration history restored."}
 
-    return StreamingResponse(events(), media_type="text/event-stream")
+
+@app.get("/demo/scenarios", response_model=list[DemoScenario])
+def scenarios() -> list[DemoScenario]:
+    return demo_scenarios()

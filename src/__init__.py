@@ -1,1 +1,1 @@
-"""Zycus Support AI application package."""
+"""Invoice Decision Engine application package."""

@@ -1,6 +1,9 @@
 [tool.pyright]
-include = ["src", "evals"]
+include = ["src", "tests"]
 extraPaths = ["."]
 
 [tool.ruff]
 line-length = 120
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

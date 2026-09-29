@@ -1,68 +1,71 @@
-# Zycus Support AI
+# Invoice Decision Engine
 
-Zycus Support AI is a mock-data support copilot implementing intelligent ticket triage and TAM account-health briefs. Task 1 retrieves relevant knowledge-base context with hybrid BM25 lexical search plus dense local Chroma search, fuses rankings with RRF, and asks an OpenAI-compatible LLM for validated JSON. Task 2 uses a deterministic, dataset-anchored account/ticket join and a two-step extraction-to-synthesis prompt chain. Evaluation includes RAGAS-style faithfulness, answer relevancy, context precision, and account-summary groundedness judges.
+A deterministic invoice-processing workflow that turns PDF/text/structured invoice input into an explainable payment decision.
 
-## Architecture
+## What it does
 
-- `rank-bm25` and persistent local ChromaDB (default ONNX MiniLM embeddings) are fused with Reciprocal Rank Fusion (`k=60`). No embedding API is used.
-- OpenAI Python SDK targets Groq by default through `LLM_BASE_URL`; any compatible provider works without code changes.
-- JSON mode plus Pydantic validation retries once with validation feedback. Task 2 LLM calls are cached on disk by SHA-256 of model, prompt filename, and rendered prompt.
-- Ticket/account joining uses `account_id` OR case-insensitive company name, deduplicated by `ticket_id`. Dataset verification found direct `account_id` matching for only 4 of 50 accounts, while all 50 company names match tickets (4–17 tickets each); the company fallback is therefore required. The dataset's maximum ticket timestamp anchors the last-90-day window; wall-clock time is never used.
+1. Extracts vendor, invoice identity, date, PO reference, currency, subtotal, tax, total, and optional line-item evidence.
+2. Records field confidence and extraction warnings. PDFs use machine-readable text first and attempt local OCR for image-only pages when the workstation supports it.
+3. Validates required identity fields, approved vendors, currency, tax arithmetic, and PO matching.
+4. Detects exact duplicates using vendor + normalized invoice number and document hash.
+5. Tracks cumulative approved amounts against a PO, including split invoices.
+6. Applies a tolerance of the greater of 1% of the PO amount or $10.
+7. Returns `APPROVE`, `APPROVE_WITH_VARIANCE`, `MANUAL_REVIEW`, or `REJECT` with rule evidence and an ordered audit trail.
 
-## Setup
+The deterministic path requires no API key or external service. OCR is an optional local capability; no LLM is required or consulted for financial decisions. Unreadable documents are explicitly routed to manual review.
+
+## Decision policy
+
+- Required fields: invoice number, invoice date, vendor, currency, and total. Required-field confidence below `0.75` blocks automatic approval.
+- An explicit PO is preferred. If it is missing, vendor/currency/amount fallback matching is allowed only when exactly one safe candidate remains.
+- Unknown or unapproved vendors, ambiguous PO matches, currency mismatches, and unreliable extraction go to manual review.
+- A provable exact duplicate is rejected. Partial duplicate evidence goes to manual review.
+- Split invoices consume the PO's remaining approved balance. Amounts over the remaining balance but within tolerance are approved with variance; larger overages are rejected.
+- Separate or embedded tax is accepted. When subtotal and tax are present, they must reconcile to the total within the configured tolerance.
+- Raw uploads are processed without storing PDF binaries by default. The decision stores a SHA-256 hash and normalized evidence.
+
+## Run locally
 
 ```bash
 python -m venv .venv
-# Windows: .venv\\Scripts\\activate
-# macOS/Linux: source .venv/bin/activate
+# Windows
+.venv\\Scripts\\activate
+# macOS/Linux
+# source .venv/bin/activate
 pip install -r requirements.txt
-copy .env.example .env          # Windows
-# cp .env.example .env          # macOS/Linux; then add key
-```
 
-Add an OpenAI-compatible key to `.env`. Never commit `.env`. First run downloads Chroma's local ONNX embedding model (~80 MB, one time; internet required) and builds the tiny index in a few seconds.
-
-## Sample runs
-
-Task 1, JSON input:
-
-```bash
-python -m src.triage --subject "CloudSync timeout" --body "Files stopped syncing; ERR_CONNECTION_TIMEOUT after 30s"
-```
-
-Expected shape: `{ "product": "CloudSync", "category": "Performance", "urgency": "P2/P3", "matched_kb_doc": {...}, "draft_first_response": "..." }`.
-
-Task 1, raw text:
-
-```bash
-python -m src.triage --text $'CloudSync timeout\\nFiles stopped syncing in production'
-```
-
-Task 2:
-
-```bash
-python -m src.account_brief --account-id ACC-3336
-```
-
-Expected shape: stable JSON with `executive_summary`, `open_risks` (verbatim quotes), and `talking_points`, followed by rendered Markdown.
-
-Task 3:
-
-```bash
-python -m evals.run_evals
-```
-
-Writes `evals/eval_report.json` and `evals/eval_report.md`. Adversarial cases (ambiguous or empty tickets) use a behavioural acceptance criterion - the draft must ask a clarifying question - because RAG grounding metrics are undefined when no knowledge-base context can apply. With no key, deterministic rule checks run in offline fallback and judge rows are marked skipped; configure a key for LLM-as-judge scores.
-
-## API and UI
-
-```bash
 uvicorn src.api:app --reload
+# in a second terminal
 streamlit run app.py
 ```
 
-Endpoints: `POST /triage` accepts `{"subject": "...", "body": "..."}` or `{"text": "..."}`; `GET /account-brief/{account_id}` returns the brief. `POST /triage/stream` emits a classification SSE event first, then draft tokens from a second streaming call. `GET /account-brief/{account_id}/stream` streams the brief section by section over SSE; the brief is computed and cached before streaming starts, so Task 2 determinism is preserved - streaming is delivery, not generation. Structured classification is intentionally completed before streaming because JSON mode cannot be safely token-streamed.
+Open Streamlit at `http://localhost:8501`. The API is at `http://localhost:8000`.
 
-## Design
+## API
 
-See [DESIGN_NOTE.md](DESIGN_NOTE.md) for failure modes, latency/quality tradeoffs, PII handling, and 10x scaling.
+### Process text or structured fallback
+
+```bash
+curl -X POST http://localhost:8000/invoices/process \\
+  -H "Content-Type: application/json" \\
+  -d '{"document_text":"Vendor: Acme Industrial Supplies\\nInvoice Number: INV-1001\\nInvoice Date: 2026-09-12\\nPO Number: PO-1001\\nCurrency: USD\\nSubtotal: 925.00\\nTax: 75.00\\nTotal: 1000.00"}'
+```
+
+`POST /invoices/upload` accepts a PDF, text, or JSON file. `GET /decisions/{id}` retrieves one result. `GET /decisions` lists history. `GET /demo/scenarios` lists reproducible examples. `POST /demo/reset` restores seeded vendors, POs, split-invoice history, and duplicate history.
+
+## Showcase scenarios
+
+- Clean machine-readable invoice → approve.
+- Image-only/scanned invoice → OCR attempt and manual review when local OCR is unavailable or fields remain unreliable.
+- Missing invoice number → manual review.
+- Split invoice against a PO with an existing approved partial → approve against remaining balance.
+- Exact duplicate → reject with the previous decision ID.
+- Out-of-tolerance amount → reject.
+
+## Test
+
+```bash
+pytest -q
+```
+
+The tests exercise the shared processing service and FastAPI interface, not private implementation details.

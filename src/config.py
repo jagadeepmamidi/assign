@@ -1,4 +1,6 @@
-"""Application configuration, rooted at repository directory."""
+"""Environment-backed configuration for the local invoice engine."""
+
+from __future__ import annotations
 
 import os
 from dataclasses import dataclass
@@ -13,17 +15,8 @@ load_dotenv(ROOT / ".env")
 @dataclass(frozen=True)
 class Settings:
     root: Path = ROOT
-    base_url: str = os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1")
-    api_key: str = os.getenv("LLM_API_KEY", "")
-    model: str = os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
-    cache_dir: Path = ROOT / ".cache"
-    chroma_dir: Path = ROOT / ".chroma"
+    database_path: Path = Path(os.getenv("INVOICE_DB_PATH", str(ROOT / "data" / "invoice_engine.sqlite3")))
+    upload_max_bytes: int = int(os.getenv("INVOICE_MAX_UPLOAD_BYTES", "10485760"))
 
 
 settings = Settings()
-
-
-def require_api_key() -> str:
-    if not settings.api_key or settings.api_key.startswith("your-"):
-        raise RuntimeError("LLM_API_KEY is missing. Copy .env.example to .env and add an OpenAI-compatible API key.")
-    return settings.api_key

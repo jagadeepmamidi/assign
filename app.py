@@ -1,78 +1,121 @@
-"""Streamlit bonus UI for TAMs and support agents."""
+"""Streamlit operations surface for invoice decisions."""
 
 from __future__ import annotations
 
-import os
-import time
-from pathlib import Path
+import json
 
 import streamlit as st
 
-st.set_page_config(page_title="Zycus Support AI", page_icon="🛠️", layout="wide")
+from src.fixtures import list_scenarios, scenario
+from src.models import Decision
+from src.service import InvoiceDecisionEngine
 
-# On Streamlit Community Cloud, keys live in st.secrets rather than the process
-# environment; mirror them into os.environ before src.config reads it at import.
-# Only touch st.secrets when a secrets file exists, otherwise Streamlit paints
-# a "No secrets found" banner into the page on local runs.
-_secret_files = (
-    Path.home() / ".streamlit" / "secrets.toml",
-    Path(__file__).resolve().parent / ".streamlit" / "secrets.toml",
-)
-if any(f.exists() for f in _secret_files):
-    for _key, _value in st.secrets.items():
-        if isinstance(_value, str) and _key not in os.environ:
-            os.environ[_key] = _value
 
-from src.account_brief import build_account_brief
-from src.data_loader import load_accounts
-from src.retrieval import get_retriever
-from src.triage import stream_draft, triage_ticket
+st.set_page_config(page_title="Invoice Decision Engine", page_icon="🧾", layout="wide")
 
 
 @st.cache_resource
-def resources():
-    return get_retriever(), load_accounts()
+def get_engine() -> InvoiceDecisionEngine:
+    return InvoiceDecisionEngine()
 
 
-retriever, accounts = resources()
-tab_triage, tab_brief = st.tabs(["Ticket Triage", "Account Brief"])
+def show_decision(decision: Decision) -> None:
+    colors = {"APPROVE": "green", "APPROVE_WITH_VARIANCE": "orange", "MANUAL_REVIEW": "orange", "REJECT": "red"}
+    color = colors.get(decision.status.value, "gray")
+    st.markdown(f"## :{color}[{decision.status.value.replace('_', ' ')}]")
+    st.write(decision.reason)
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Decision ID", decision.id)
+    c2.metric("Vendor", decision.vendor.name if decision.vendor else "Unknown")
+    c3.metric("PO", decision.purchase_order.po_number if decision.purchase_order else "Unmatched")
+    c4.metric("Invoice total", str(decision.extraction.fields.total or "—"))
 
-with tab_triage:
-    st.header("Ticket triage")
-    subject = st.text_input("Subject")
-    body = st.text_area("Ticket body", height=180)
-    if st.button("Triage ticket", type="primary"):
-        try:
-            result = triage_ticket(subject, body, retriever=retriever)
-            c1, c2, c3 = st.columns(3)
-            c1.metric("Category", result.category)
-            c2.metric("Urgency", result.urgency)
-            c3.metric("Team", result.recommended_team)
-            if result.matched_kb_doc:
-                st.subheader("Knowledge-base match")
-                st.caption(f"{result.matched_kb_doc.source_file} · {result.matched_kb_doc.section_heading}")
-                st.info(result.matched_kb_doc.excerpt)
-            st.subheader("Draft first response")
-            hits = retriever.search(f"Subject: {subject}\n\nBody: {body}", k=3)
-            st.write_stream(stream_draft(subject, body, result, hits))
-        except RuntimeError as exc:
-            st.error(str(exc))
+    tabs = st.tabs(["Extraction", "Rules", "Audit trail", "JSON"])
+    with tabs[0]:
+        fields = decision.extraction.fields.model_dump(mode="json")
+        st.json(fields)
+        if decision.extraction.warnings:
+            for warning in decision.extraction.warnings:
+                st.warning(warning)
+    with tabs[1]:
+        st.dataframe(
+            [
+                {"Rule": check.name, "State": check.state.value, "Result": check.message}
+                for check in decision.rule_checks
+            ],
+            use_container_width=True,
+            hide_index=True,
+        )
+    with tabs[2]:
+        for event in decision.audit_events:
+            st.write(f"**{event.at}** · `{event.name}` · {event.message}")
+    with tabs[3]:
+        st.code(decision.model_dump_json(indent=2), language="json")
 
-with tab_brief:
-    st.header("Account health brief")
-    labels = {f"{a['company']} ({a['account_id']})": a["account_id"] for a in accounts}
-    label = st.selectbox("Account", list(labels))
-    if st.button("Build brief"):
-        try:
-            brief = build_account_brief(labels[label])
-            markdown = brief.to_markdown()
 
-            def stream_sections():
-                # Brief is precomputed and deterministic; stream its delivery only.
-                for line in markdown.splitlines(keepends=True):
-                    yield line
-                    time.sleep(0.02)
+engine = get_engine()
+st.title("Invoice Decision Engine")
+st.caption("Extract, validate, match, and explain invoice decisions without opaque approval logic.")
 
-            st.write_stream(stream_sections)
-        except RuntimeError as exc:
-            st.error(str(exc))
+with st.sidebar:
+    st.header("Demo controls")
+    if st.button("Reset demo data", use_container_width=True):
+        engine.reset_demo()
+        st.session_state.pop("last_decision", None)
+        st.success("Seeded data restored.")
+    st.divider()
+    st.header("Decision history")
+    history = engine.list_decisions()
+    if history:
+        selected_id = st.selectbox(
+            "Open a previous decision",
+            options=[item.id for item in history],
+            format_func=lambda value: next((f"{item.status.value} · {value}" for item in history if item.id == value), value),
+        )
+left, right = st.columns([1, 1.3])
+with left:
+    st.subheader("Process an invoice")
+    scenarios = list_scenarios()
+    scenario_labels = {item.name: item.key for item in scenarios}
+    selected_label = st.selectbox("Try a seeded scenario", list(scenario_labels))
+    selected = scenario(scenario_labels[selected_label])
+    st.caption(selected.description)
+    if st.button("Process selected scenario", type="primary", use_container_width=True):
+        if selected.filename.lower().endswith(".pdf"):
+            st.session_state.last_decision = engine.process_document(
+                selected.document_text.encode("utf-8"), filename=selected.filename
+            )
+        else:
+            st.session_state.last_decision = engine.process_text(
+                selected.document_text, filename=selected.filename, source="demo"
+            )
+
+    uploaded = st.file_uploader("Or upload a PDF, text, or structured JSON invoice", type=["pdf", "txt", "json"])
+    if uploaded and st.button("Process upload", use_container_width=True):
+        st.session_state.last_decision = engine.process_document(uploaded.getvalue(), filename=uploaded.name)
+
+    with st.expander("Structured JSON fallback"):
+        example = {
+            "vendor_name": "Acme Industrial Supplies",
+            "invoice_number": "INV-JSON-001",
+            "invoice_date": "2026-09-20",
+            "po_reference": "PO-1001",
+            "currency": "USD",
+            "subtotal": "9.25",
+            "tax": "0.75",
+            "total": "10.00",
+            "confidence": {"vendor_name": 0.99, "invoice_number": 0.99, "invoice_date": 0.99, "currency": 0.99, "total": 0.99},
+        }
+        payload = st.text_area("Invoice JSON", json.dumps(example, indent=2), height=220)
+        if st.button("Process JSON", use_container_width=True):
+            try:
+                st.session_state.last_decision = engine.process_structured(json.loads(payload), filename="invoice.json")
+            except (ValueError, TypeError, json.JSONDecodeError) as exc:
+                st.error(str(exc))
+
+with right:
+    st.subheader("Decision explanation")
+    if decision := st.session_state.get("last_decision"):
+        show_decision(decision)
+    else:
+        st.info("Process a seeded scenario or upload an invoice to see the complete decision trace.")
