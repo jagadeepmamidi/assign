@@ -135,7 +135,7 @@ def _render_field_grid(fields) -> None:
 
 def _render_warnings(warnings: Iterable[str]) -> None:
     for warning in warnings:
-        st.warning(warning, icon="!")
+        st.warning(warning, icon="⚠️")
 
 
 def show_decision(decision: Decision) -> None:
