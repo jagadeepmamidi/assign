@@ -8,6 +8,7 @@ import json
 import re
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -38,17 +39,27 @@ def _label_value(text: str, label_pattern: str) -> str | None:
     return match.group(1).strip() if match else None
 
 def _receipt_invoice_number(text: str) -> str | None:
-    match = re.search(r"\bReceipt\s*\.?\s*(?:No|Number)\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]+)", text, re.IGNORECASE)
-    return match.group(1).strip() if match else None
+    patterns = (
+        r"\bReceipt\s*\.?\s*(?:No|Number)\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]+)",
+        r"\bReceipt\s*\.?\s*\n\s*([A-Z0-9][A-Z0-9-]{3,})\s*(?=\n|$)",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+    return None
 
 
 def _receipt_date(text: str) -> str | None:
-    match = re.search(
-        r"\bReceipt\s+Date\s*[:#-]?\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})",
-        text,
-        re.IGNORECASE,
+    patterns = (
+        r"\bReceipt\s+Date\s*[:#-]?\s*(\d{1,4}[-/]\d{1,2}[-/]\d{2,4})",
+        r"\bReceipt\s+(\d{1,4}[-/]\d{1,2}[-/]\d{2,4})\s*\n.*?\bDate\b",
     )
-    return match.group(1) if match else None
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+        if match:
+            return match.group(1)
+    return None
 
 
 def _header_vendor(text: str) -> str | None:
@@ -68,7 +79,7 @@ def _header_vendor(text: str) -> str | None:
 def _receipt_total(text: str) -> Decimal | None:
     patterns = (
         r"[₹]\s*([\d,]+(?:\.\d{1,2})?)\s+Total\s+Amount",
-        r"(?:Total\s+Amount|Amount\s+Due|Grand\s+Total)\s*[:#-]?\s*[₹$€£]?\s*([\d,]+(?:\.\d{1,2})?)",
+        r"(?:Total\s+Amount|Amount\s+Due|Grand\s+Total)\s*[:#-]?\s*(?:Rs\.?\s*)?[₹$€£]?\s*([\dOo,]+(?:\.\d{1,2})?)",
         r"Inclusive\s+of\s+GST\s*[₹]?\s*([\d,]+(?:\.\d{1,2})?)",
     )
     for pattern in patterns:
@@ -81,10 +92,10 @@ def _receipt_total(text: str) -> Decimal | None:
 def _amount(value: str | None) -> Decimal | None:
     if not value:
         return None
-    matches = re.findall(r"[-+]?\(?\s*\d[\d,]*(?:\.\d{1,2})?\s*\)?", value)
+    matches = re.findall(r"[-+]?\(?\s*\d[\dOo,]*(?:\.\d{1,2})?\s*\)?", value)
     if not matches:
         return None
-    raw = matches[-1].replace(",", "").replace(" ", "")
+    raw = matches[-1].replace(",", "").replace(" ", "").replace("o", "0").replace("O", "0")
     negative = raw.startswith("(") and raw.endswith(")")
     raw = raw.strip("()")
     try:
@@ -98,7 +109,7 @@ def _date(value: str | None) -> str | None:
     if not value:
         return None
     cleaned = value.strip()
-    for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%d/%m/%Y", "%B %d, %Y", "%b %d, %Y"):
+    for fmt in ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%d/%m/%Y", "%d-%m-%Y", "%d-%m-%y", "%B %d, %Y", "%b %d, %Y"):
         try:
             return datetime.strptime(cleaned, fmt).date().isoformat()
         except ValueError:
@@ -177,7 +188,49 @@ def _pdf_text(data: bytes) -> tuple[str, int]:
     return text, pages
 
 
-def _ocr_pdf(data: bytes) -> str:
+@lru_cache(maxsize=1)
+def _paddle_ocr():
+    from paddleocr import PaddleOCR  # type: ignore[import-not-found]
+
+    return PaddleOCR(
+        lang="en",
+        ocr_version="PP-OCRv5",
+        device="cpu",
+        use_doc_orientation_classify=False,
+        use_doc_unwarping=False,
+        use_textline_orientation=False,
+        enable_mkldnn=False,
+    )
+
+
+def _paddle_text(result: Any) -> list[str]:
+    try:
+        texts = result["rec_texts"]
+    except (KeyError, TypeError, IndexError):
+        payload = getattr(result, "json", {})
+        if isinstance(payload, str):
+            payload = json.loads(payload)
+        texts = payload.get("rec_texts", []) if isinstance(payload, dict) else []
+    return [str(text).strip() for text in texts if str(text).strip()]
+
+
+def _paddle_ocr_pdf(data: bytes) -> str:
+    import fitz  # type: ignore[import-not-found]
+    import numpy as np  # type: ignore[import-not-found]
+
+    document = fitz.open(stream=data, filetype="pdf")
+    chunks: list[str] = []
+    ocr = _paddle_ocr()
+    for page in document:
+        renderable_page: Any = page
+        pixmap = renderable_page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+        image = np.frombuffer(pixmap.samples, dtype=np.uint8).reshape(pixmap.height, pixmap.width, pixmap.n)
+        for result in ocr.predict(image):
+            chunks.extend(_paddle_text(result))
+    return "\n".join(chunks)
+
+
+def _tesseract_ocr_pdf(data: bytes) -> str:
     import fitz  # type: ignore[import-not-found]
     import pytesseract  # type: ignore[import-not-found]
     from PIL import Image  # type: ignore[import-not-found]
@@ -190,6 +243,20 @@ def _ocr_pdf(data: bytes) -> str:
         image = Image.open(io.BytesIO(pixmap.tobytes("png")))
         chunks.append(pytesseract.image_to_string(image))
     return "\n".join(chunks)
+
+
+def _ocr_pdf(data: bytes) -> tuple[str, str]:
+    try:
+        text = _paddle_ocr_pdf(data)
+        if text.strip():
+            return text, "paddleocr"
+    except Exception as paddle_exc:
+        try:
+            text = _tesseract_ocr_pdf(data)
+            return text, "tesseract"
+        except Exception as tesseract_exc:
+            raise RuntimeError(f"PaddleOCR unavailable: {paddle_exc}; Tesseract unavailable: {tesseract_exc}") from tesseract_exc
+    raise RuntimeError("PaddleOCR returned no text.")
 
 
 def extract_document(data: bytes, filename: str) -> ExtractionResult:
@@ -219,9 +286,9 @@ def extract_document(data: bytes, filename: str) -> ExtractionResult:
         result.pages = pages
         return result
 
-    warnings.append("PDF contains little or no machine-readable text; OCR was attempted.")
+    warnings.append("PDF contains little or no machine-readable text; local OCR was attempted.")
     try:
-        ocr_text = _ocr_pdf(data)
+        ocr_text, ocr_engine = _ocr_pdf(data)
     except Exception as exc:
         warnings.append(f"Local OCR unavailable: {exc}")
         return ExtractionResult(
@@ -233,7 +300,7 @@ def extract_document(data: bytes, filename: str) -> ExtractionResult:
             ocr_attempted=True,
             warnings=warnings,
         )
-    result = extract_text(ocr_text, source="upload", digest=digest, method="pdf-ocr")
+    result = extract_text(ocr_text, source="upload", digest=digest, method=f"pdf-ocr-{ocr_engine}")
     result.pages = pages
     result.ocr_attempted = True
     result.warnings = warnings + result.warnings

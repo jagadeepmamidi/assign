@@ -64,6 +64,46 @@ def test_missing_invoice_number_requires_manual_review(tmp_path: Path) -> None:
     assert "missing invoice_number" in decision.reason
 
 
+def test_ocr_style_receipt_date_and_amount_are_normalized(tmp_path: Path) -> None:
+    text = """VIT-AP UNIVERSITY
+PAYMENT SUCCESS
+Receipt Number 6350
+Receipt Date 08-05-2026
+Grand Total : Rs 4720.0
+"""
+
+    decision = engine(tmp_path).process_text(text, source="ocr")
+    fields = decision.extraction.fields
+
+    assert fields.invoice_number == "6350"
+    assert fields.invoice_date == "2026-05-08"
+    assert fields.currency == "INR"
+    assert fields.total == 4720
+
+
+def test_ocr_line_breaks_extract_receipt_fields(tmp_path: Path) -> None:
+    text = """VIT-AP
+VIT
+UNIVERSITY
+Receipt.
+6350
+Receipt
+08-05-2026
+Application Number/Register
+Date
+Number
+Grand Total : Rs 472o.0
+"""
+
+    decision = engine(tmp_path).process_text(text, source="ocr")
+    fields = decision.extraction.fields
+
+    assert fields.invoice_number == "6350"
+    assert fields.invoice_date == "2026-05-08"
+    assert fields.currency == "INR"
+    assert fields.total == 4720
+
+
 def test_split_invoice_uses_seeded_remaining_balance(tmp_path: Path) -> None:
     text = """Vendor: Northstar Facilities
 Invoice Number: INV-SPLIT-TEST

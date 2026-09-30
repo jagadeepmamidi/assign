@@ -5,14 +5,14 @@ A deterministic invoice-processing workflow that turns PDF/text/structured invoi
 ## What it does
 
 1. Extracts vendor, invoice identity, date, PO reference, currency, subtotal, tax, total, and optional line-item evidence.
-2. Records field confidence and extraction warnings. PDFs use machine-readable text first and attempt local OCR for image-only pages when the workstation supports it.
+2. Records field confidence and extraction warnings. PDFs use machine-readable text first, then local PaddleOCR for image-only pages, with Tesseract as a fallback when installed.
 3. Validates required identity fields, approved vendors, currency, tax arithmetic, and PO matching.
 4. Detects exact duplicates using vendor + normalized invoice number and document hash.
 5. Tracks cumulative approved amounts against a PO, including split invoices.
 6. Applies a tolerance of the greater of 1% of the PO amount or $10.
 7. Returns `APPROVE`, `APPROVE_WITH_VARIANCE`, `MANUAL_REVIEW`, or `REJECT` with rule evidence and an ordered audit trail.
 
-The deterministic path requires no API key or external service. OCR is an optional local capability; no LLM is required or consulted for financial decisions. Unreadable documents are explicitly routed to manual review.
+The deterministic path requires no API key or external service. PaddleOCR runs locally and downloads its free OCR models from Hugging Face on first use; set `PADDLE_PDX_MODEL_SOURCE=BOS` only if Hugging Face access is unavailable. No LLM is required or consulted for financial decisions.
 
 ## Decision policy
 
@@ -40,6 +40,10 @@ streamlit run app.py
 ```
 
 Open Streamlit at `http://localhost:8501`. The API is at `http://localhost:8000`.
+
+### Local OCR
+
+`paddlepaddle` and `paddleocr` are installed from `requirements.txt`. On the first image-only PDF, PaddleOCR downloads its OCR models and may take longer than later runs. The OCR path uses CPU by default and does not require a token. If PaddleOCR is unavailable, the engine tries Tesseract; if both are unavailable, it records the limitation and routes the document to manual review.
 
 ## API
 
